@@ -79,7 +79,7 @@
     <rule ref="PEAR.Classes.ClassDeclaration"/>
     <!-- <rule ref="PEAR.Commenting.ClassComment"/> -->
     <!-- <rule ref="PEAR.Commenting.FileComment"/> -->
-    <!-- <rule ref="PEAR.Commenting.FunctionComment"/> -->
+    <rule ref="PEAR.Commenting.FunctionComment"/>
     <rule ref="PEAR.Commenting.InlineComment"/>
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
