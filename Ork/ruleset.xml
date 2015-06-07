@@ -77,7 +77,7 @@
 
     <!-- PEAR -->
     <rule ref="PEAR.Classes.ClassDeclaration"/>
-    <rule ref="PEAR.Commenting.ClassComment"/>
+    <!-- <rule ref="PEAR.Commenting.ClassComment"/> -->
     <!-- <rule ref="PEAR.Commenting.FileComment"/> -->
     <!-- <rule ref="PEAR.Commenting.FunctionComment"/> -->
     <rule ref="PEAR.Commenting.InlineComment"/>
@@ -116,7 +116,7 @@
     <!-- Zend -->
     <!-- <rule ref="Zend.Debug.CodeAnalyzer"/> -->
     <rule ref="Zend.Files.ClosingTag"/>
-    <rule ref="Zend.NamingConventions.ValidVariableName"/>
+    <!-- <rule ref="Zend.NamingConventions.ValidVariableName"/> -->
 
     <!-- Squiz -->
     <rule ref="Squiz.Classes.ClassDeclaration"/>
