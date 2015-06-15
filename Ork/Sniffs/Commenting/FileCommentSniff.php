@@ -2,6 +2,10 @@
 /**
  * Parses and verifies the doc comments for files.
  *
+ * This sniff is based on PEAR_Sniffs_Commenting_FileCommentSniff, but
+ * some default options have been changed and the hard-coded requirement
+ * for the "PHP Version" tags has been removed.
+ *
  * PHP version 5
  *
  * @category  PHP

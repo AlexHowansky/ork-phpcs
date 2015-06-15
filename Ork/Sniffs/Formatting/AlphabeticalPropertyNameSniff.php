@@ -12,15 +12,15 @@
 /**
  * Ensures class properties are defined in alphabetical order.
  */
-class Ork_Sniffs_Formatting_AlphabeticalVariableNameSniff implements PHP_CodeSniffer_Sniff
+class Ork_Sniffs_Formatting_AlphabeticalPropertyNameSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
-     * Are we inside a function?
+     * The scope closer for the current scope.
      *
-     * @var boolean
+     * @var type
      */
-    protected $inFunction = false;
+    protected $closer = null;
 
     /**
      * Track the last variable name we encountered.
@@ -52,28 +52,28 @@ class Ork_Sniffs_Formatting_AlphabeticalVariableNameSniff implements PHP_CodeSni
 
         $tokens = $phpcsFile->getTokens()[$stackPtr];
 
-        // New class, reset the list.
-        if (in_array($tokens['code'], [T_CLASS, T_INTERFACE, T_TRAIT])) {
-            $this->lastVariableName = null;
-            $this->inFunction = false;
-            return;
-        }
-
-        // Mark start of functions.
+        // Ignore everything after the first method delcaration.
         if ($tokens['code'] === T_FUNCTION) {
-            $this->inFunction = true;
+            return $phpcsFile->numTokens + 1;
+        }
+
+        // Start of a new class, reset the list.
+        if (in_array($tokens['code'], [T_CLASS, T_INTERFACE, T_TRAIT])) {
+            $this->closer = $tokens['scope_closer'];
+            $this->inFunction = false;
+            $this->lastVariableName = null;
             return;
         }
 
-        // In a function, skip.
-        if ($this->inFunction) {
+        // Not in a class, skip.
+        if ($this->closer === null || $tokens['line'] > $this->closer) {
             return;
         }
 
         // Make sure this variable name is greater than the last one we encountered.
         $variableName = $tokens['content'];
-        if ($this->lastVariableName !== null && $variableName < $this->lastVariableName) {
-            $phpcsFile->addError('Function "%s" is not in alphabetical order.', $stackPtr, 'Found', [$variableName]);
+        if ($this->lastVariableName !== null && $variableName <= $this->lastVariableName) {
+            $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', [$variableName]);
         }
 
         $this->lastVariableName = $variableName;

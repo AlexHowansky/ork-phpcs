@@ -51,7 +51,7 @@ class Ork_Sniffs_Formatting_AlphabeticalFunctionNameSniff implements PHP_CodeSni
 
         // Make sure this function name is greater than the last one we encountered.
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($this->lastFunctionName !== null && $functionName < $this->lastFunctionName) {
+        if ($this->lastFunctionName !== null && $functionName <= $this->lastFunctionName) {
             $phpcsFile->addError('Function "%s" is not in alphabetical order.', $stackPtr, 'Found', [$functionName]);
         }
 
