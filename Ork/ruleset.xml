@@ -147,7 +147,7 @@
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
     <rule ref="Squiz.PHP.DisallowBooleanStatement"/>
-    <rule ref="Squiz.PHP.DisallowComparisonAssignment"/>
+    <!-- <rule ref="Squiz.PHP.DisallowComparisonAssignment"/> -->
     <!-- <rule ref="Squiz.PHP.DisallowInlineIf"/> -->
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
     <rule ref="Squiz.PHP.DisallowObEndFlush"/>
