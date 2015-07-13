@@ -82,7 +82,7 @@
     <rule ref="PEAR.Commenting.FunctionComment"/>
     <rule ref="PEAR.Commenting.InlineComment"/>
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
-    <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
+    <!-- <rule ref="PEAR.ControlStructures.MultiLineCondition"/> -->
     <rule ref="PEAR.Files.IncludingFile"/>
     <rule ref="PEAR.Formatting.MultiLineAssignment"/>
     <rule ref="PEAR.Functions.FunctionCallSignature"/>
@@ -103,7 +103,7 @@
     <!-- PSR-2 -->
     <!-- <rule ref="PSR2.Classes.ClassDeclaration"/> -->
     <rule ref="PSR2.Classes.PropertyDeclaration"/>
-    <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
+    <!-- <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/> -->
     <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
     <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
     <rule ref="PSR2.Files.ClosingTag"/>
