@@ -130,7 +130,7 @@
     <!-- <rule ref="Squiz.CSS" -->
     <!-- <rule ref="Squiz.Debug" -->
     <!-- <rule ref="Squiz.Files.FileExtension"/> -->
-    <rule ref="Squiz.Formatting.OperatorBracket"/>
+    <!-- <rule ref="Squiz.Formatting.OperatorBracket"/> -->
     <!-- <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/> -->
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
     <rule ref="Squiz.Functions.FunctionDuplicateArgument"/>

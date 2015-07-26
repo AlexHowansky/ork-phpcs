@@ -23,3 +23,7 @@ CHANGELOG
   multi-line conditionals.
 * Added a custom version of PSR2_Sniffs_WhiteSpace_ControlStructureSpacingSniff to allow newline immediately after
   open for multi-line conditionals.
+
+1.3.1
+-----
+* Removed use of Squiz_Sniffs_Formatting_OperatorBracketSniff.
