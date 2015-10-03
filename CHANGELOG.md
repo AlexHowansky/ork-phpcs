@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.3.2
+-----
+* Removed use of PEAR_Sniffs_Functions_FunctionCallSignatureSniff.
+
 1.3.1
 -----
 * Removed use of Squiz_Sniffs_Formatting_OperatorBracketSniff.
