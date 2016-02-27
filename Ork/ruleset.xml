@@ -140,7 +140,9 @@
     <rule ref="Squiz.NamingConventions.ValidFunctionName"/>
     <rule ref="Squiz.NamingConventions.ValidVariableName"/>
     <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
-    <rule ref="Squiz.Objects.ObjectInstantiation"/>
+    <rule ref="Squiz.Objects.ObjectInstantiation">
+        <exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
+    </rule>
     <rule ref="Squiz.Objects.ObjectMemberComma"/>
     <rule ref="Squiz.Operators.ComparisonOperatorUsage"/>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
