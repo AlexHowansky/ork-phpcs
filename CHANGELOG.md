@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.3.4
+-----
+* Updated Ork.PHP.DisallowComparisonAssignment to allow comparisons when explicitly cast to boolean.
+
 1.3.3
 -----
 * Removed use of Squiz.Objects.ObjectInstantiation.NotAssigned.

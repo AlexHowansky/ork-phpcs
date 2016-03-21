@@ -3,7 +3,8 @@
  * Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff.
  *
  * This sniff is based on Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff,
- * but it corrects the following issue, which Squiz does not accept as a bug.
+ * but it allows comparison assignments when cast to a boolean, and it
+ * corrects the following issue, which Squiz does not accept as a bug.
  *
  * @see https://github.com/squizlabs/PHP_CodeSniffer/issues/616
  *
@@ -105,6 +106,11 @@ class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffe
         if ($tokens[$stackPtr]['conditions'] !== $tokens[$endStatement]['conditions']) {
             // This statement doesn't end with a semicolon, which is the case for
             // the last expression in a for loop.
+            return;
+        }
+
+        // Allow assignments when explicitly cast to a boolean.
+        if ($phpcsFile->findNext(T_BOOL_CAST, $stackPtr + 1, null, false, null, true) !== false) {
             return;
         }
 
