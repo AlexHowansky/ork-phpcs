@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.3.5
+-----
+* Added Ork.Formatting.MultiLineAssignment.
+
 1.3.4
 -----
 * Updated Ork.PHP.DisallowComparisonAssignment to allow comparisons when explicitly cast to boolean.
