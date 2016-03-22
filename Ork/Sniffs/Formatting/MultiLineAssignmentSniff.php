@@ -52,6 +52,23 @@ class Ork_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer_
             return;
         }
 
+        // The equals sign should be the last thing on the line.
+        $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
+        if (
+            $next === false ||
+            $tokens[$next]['code'] === T_ARRAY ||
+            $tokens[$next]['code'] === T_OPEN_SHORT_ARRAY
+        ) {
+            return;
+        }
+        if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line'] + 1) {
+            $phpcsFile->addError(
+                'The first line of a multi-line assignment must end with an equals sign',
+                $stackPtr,
+                'EqualSignLine'
+            );
+        }
+
         // The equals sign should not be the first thing on the line.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
         if ($prev === false) {
@@ -60,19 +77,6 @@ class Ork_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer_
         if ($tokens[$prev]['line'] !== $tokens[$stackPtr]['line']) {
             $phpcsFile->addError(
                 'Multi-line assignments must have the equal sign on the first line',
-                $stackPtr,
-                'EqualSignLine'
-            );
-        }
-
-        // The equals sign should be the last thing on the line.
-        $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-        if ($next === false) {
-            return;
-        }
-        if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line'] + 1) {
-            $phpcsFile->addError(
-                'The first line of a multi-line assignment must end with an equals sign',
                 $stackPtr,
                 'EqualSignLine'
             );
