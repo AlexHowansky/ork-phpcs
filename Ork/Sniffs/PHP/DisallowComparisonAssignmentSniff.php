@@ -6,8 +6,6 @@
  * but it allows comparison assignments when cast to a boolean, and it
  * corrects the following issue, which Squiz does not accept as a bug.
  *
- * @see https://github.com/squizlabs/PHP_CodeSniffer/issues/616
- *
  * PHP version 5
  *
  * @category  PHP
@@ -17,6 +15,8 @@
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
+ *
+ * @see https://github.com/squizlabs/PHP_CodeSniffer/issues/616
  */
 
 /**
@@ -110,16 +110,17 @@ class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffe
         }
 
         // Allow assignments when explicitly cast to a boolean.
-        if ($phpcsFile->findNext(T_BOOL_CAST, $stackPtr + 1, null, false, null, true) !== false) {
+        if ($phpcsFile->findNext(T_BOOL_CAST, ($stackPtr + 1), null, false, null, true) !== false) {
             return;
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if (isset(PHP_CodeSniffer_Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
-                if ($phpcsFile->findNext(T_INLINE_THEN, $stackPtr + 1, null, false, null, true) === false) {
+                if ($phpcsFile->findNext(T_INLINE_THEN, ($stackPtr + 1), null, false, null, true) === false) {
                     $error = 'The value of a comparison must not be assigned to a variable';
                     $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
                 }
+
                 break;
             }
 

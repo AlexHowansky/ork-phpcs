@@ -1,6 +1,6 @@
 <?php
 /**
- * Ork_Sniffs_Formatting_AlphabeticalPropertyNamesSniff
+ * Ork_Sniffs_Formatting_AlphabeticalMethodNamesSniff
  *
  * PHP version 5
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Ensures class properties are declared in alphabetical order.
+ * Ensures class methods are declared in alphabetical order.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -23,15 +23,15 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Ork_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_CodeSniffer_Sniff
+class Ork_Sniffs_Formatting_AlphabeticalMethodNamesSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
-     * Track the last property name we encountered.
+     * Track the last method name we encountered.
      *
      * @var string
      */
-    protected $lastPropertyName = null;
+    protected $lastMethodName = null;
 
 
     /**
@@ -45,7 +45,7 @@ class Ork_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_CodeSn
                 T_CLASS,
                 T_INTERFACE,
                 T_TRAIT,
-                T_VARIABLE,
+                T_FUNCTION,
                );
 
     }//end register()
@@ -65,20 +65,19 @@ class Ork_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_CodeSn
 
         // In case we have more than one class/interface/trait
         // per file, we want to reset at the start of each.
-        if ($tokens[$stackPtr]['code'] !== T_VARIABLE) {
-            $this->lastPropertyName = null;
+        if ($tokens[$stackPtr]['code'] !== T_FUNCTION) {
+            $this->lastMethodName = null;
             return;
         }
 
-        // We only care about class properties, so ignore global
-        // variables (level 0) and method variables (level 2).
+        // We only care about class methods, so ignore global functions (level 0).
         if ($tokens[$stackPtr]['level'] === 1) {
-            $propertyName = substr($tokens[$stackPtr]['content'], 1);
-            if ($this->lastPropertyName !== null && $propertyName <= $this->lastPropertyName) {
-                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', array($propertyName));
+            $methodName = $phpcsFile->getDeclarationName($stackPtr);
+            if ($this->lastMethodName !== null && $methodName <= $this->lastMethodName) {
+                $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'Found', array($methodName));
             }
 
-            $this->lastPropertyName = $propertyName;
+            $this->lastMethodName = $methodName;
         }
 
     }//end process()

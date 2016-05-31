@@ -82,10 +82,10 @@ class Ork_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeSn
             return;
         }
 
-        $openBracket    = $tokens[$stackPtr]['parenthesis_opener'];
-        $openLine       = $tokens[$openBracket]['line'];
-        $closeBracket   = $tokens[$stackPtr]['parenthesis_closer'];
-        $closeLine      = $tokens[$closeBracket]['line'];
+        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $openLine     = $tokens[$openBracket]['line'];
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        $closeLine    = $tokens[$closeBracket]['line'];
 
         $spaceAfterOpen = 0;
         if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
@@ -100,7 +100,7 @@ class Ork_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeSn
             $error = 'First condition of a multi-line IF statement must be on a new line';
             $fix   = $phpcsFile->addFixableError($error, ($openBracket + 1), 'SpacingAfterOpenBrace');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($openBracket, '(' . $phpcsFile->eolChar);
+                $phpcsFile->fixer->replaceToken($openBracket, '('.$phpcsFile->eolChar);
             }
         }
 
