@@ -1,5 +1,13 @@
 CHANGELOG
+
 =========
+
+1.4
+---
+* Added unit test scaffolding and a few tests.
+* Made custom sniff code comply with PHPCS standard.
+* Renamed AlphabeticalFunctionNameSniff to AlphabeticalMethodNamesSniff.
+* Renamed AlphabeticalPropertyNameSniff to AlphabeticalPropertyNamesSniff.
 
 1.3.5
 -----

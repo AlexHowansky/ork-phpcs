@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Ork PHPCS">
+    <rule ref="PHPCS"/>
+    <arg value="np"/>
+    <file>Ork</file>
+</ruleset>
