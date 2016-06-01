@@ -2,6 +2,10 @@ CHANGELOG
 
 =========
 
+1.4.1
+-----
+* AlphabeticalPropertyNameSniff now ignores method parameters.
+
 1.4
 ---
 * Added unit test scaffolding and a few tests.
