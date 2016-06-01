@@ -60,4 +60,16 @@ trait FooTrait
     public $b;
 }
 
+$a = 0;
+$b = 0;
+
+class Baz
+{
+	public function foo($b, $a)
+	{
+		$b = 0;
+		$a = 0;
+	}
+}
+
 ?>

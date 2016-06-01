@@ -74,7 +74,7 @@ class Ork_Sniffs_Formatting_AlphabeticalMethodNamesSniff implements PHP_CodeSnif
         if ($tokens[$stackPtr]['level'] === 1) {
             $methodName = $phpcsFile->getDeclarationName($stackPtr);
             if ($this->lastMethodName !== null && $methodName <= $this->lastMethodName) {
-                $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'Found', array($methodName));
+                $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', array($methodName));
             }
 
             $this->lastMethodName = $methodName;

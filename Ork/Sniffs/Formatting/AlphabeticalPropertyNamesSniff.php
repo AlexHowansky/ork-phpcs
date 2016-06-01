@@ -74,8 +74,11 @@ class Ork_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_CodeSn
         // variables (level 0) and method variables (level 2).
         if ($tokens[$stackPtr]['level'] === 1) {
             $propertyName = substr($tokens[$stackPtr]['content'], 1);
-            if ($this->lastPropertyName !== null && $propertyName <= $this->lastPropertyName) {
-                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', array($propertyName));
+            if ($this->lastPropertyName !== null
+                && $propertyName <= $this->lastPropertyName
+                && array_key_exists('nested_parenthesis', $tokens[$stackPtr]) === false
+            ) {
+                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', array($propertyName));
             }
 
             $this->lastPropertyName = $propertyName;
