@@ -45,7 +45,7 @@
     <rule ref="Generic.Files.OneClassPerFile"/>
     <rule ref="Generic.Files.OneInterfacePerFile"/>
     <rule ref="Generic.Files.OneTraitPerFile"/>
-    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <!-- <rule ref="Generic.Formatting.DisallowMultipleStatements"/> -->
     <!-- <rule ref="Generic.Formatting.MultipleStatementAlignment"/> -->
     <!-- <rule ref="Generic.Formatting.NoSpaceAfterCast"/> -->
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
@@ -86,13 +86,13 @@
     <rule ref="PEAR.Files.IncludingFile"/>
     <!-- <rule ref="PEAR.Formatting.MultiLineAssignment"/> -->
     <!-- <rule ref="PEAR.Functions.FunctionCallSignature"/> -->
-    <rule ref="PEAR.Functions.FunctionDeclaration"/>
+    <!-- <rule ref="PEAR.Functions.FunctionDeclaration"/> -->
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
     <rule ref="PEAR.NamingConventions.ValidClassName"/>
     <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
     <rule ref="PEAR.NamingConventions.ValidVariableName"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
-    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
+    <!-- <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/> -->
     <rule ref="PEAR.WhiteSpace.ScopeIndent"/>
 
     <!-- PSR-1 -->
