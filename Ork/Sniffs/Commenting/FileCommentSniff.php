@@ -62,7 +62,7 @@ class Ork_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                          'allow_multiple' => true,
                                         ),
                        '@license'    => array(
-                                         'required'       => true,
+                                         'required'       => false,
                                          'allow_multiple' => false,
                                         ),
                        '@version'    => array(
@@ -70,7 +70,7 @@ class Ork_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                          'allow_multiple' => false,
                                         ),
                        '@link'       => array(
-                                         'required'       => true,
+                                         'required'       => false,
                                          'allow_multiple' => true,
                                         ),
                        '@see'        => array(
