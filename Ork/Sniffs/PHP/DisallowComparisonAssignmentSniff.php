@@ -1,39 +1,26 @@
 <?php
 /**
- * Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff.
+ * Ensures that the value of a comparison is not assigned to a variable.
  *
- * This sniff is based on Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff,
- * but it allows comparison assignments when cast to a boolean, and it
+ * This sniff is based on Squiz.PHP.DisallowComparisonAssignment, but
+ * it allows comparison assignments when cast to a boolean, and it
  * corrects the following issue, which Squiz does not accept as a bug.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Alex Howansky <alex.howansky@gmail.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  *
  * @see https://github.com/squizlabs/PHP_CodeSniffer/issues/616
  */
 
-/**
- * Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff.
- *
- * Ensures that the value of a comparison is not assigned to a variable.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Alex Howansky <alex.howansky@gmail.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffer_Sniff
+namespace PHP_CodeSniffer\Standards\Ork\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+
+class DisallowComparisonAssignmentSniff implements Sniff
 {
 
 
@@ -52,13 +39,13 @@ class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffe
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -115,7 +102,7 @@ class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffe
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
-            if (isset(PHP_CodeSniffer_Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
                 if ($phpcsFile->findNext(T_INLINE_THEN, ($stackPtr + 1), null, false, null, true) === false) {
                     $error = 'The value of a comparison must not be assigned to a variable';
                     $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
@@ -124,7 +111,7 @@ class Ork_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffe
                 break;
             }
 
-            if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$i]['code']]) === true
+            if (isset(Tokens::$booleanOperators[$tokens[$i]['code']]) === true
                 || $tokens[$i]['code'] === T_BOOLEAN_NOT
             ) {
                 $error = 'The value of a boolean operation must not be assigned to a variable';

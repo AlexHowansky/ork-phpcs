@@ -1,13 +1,16 @@
 CHANGELOG
-
 =========
+
+2.0.0
+-----
+* Updated to work with PHPCS v3.
 
 1.4.1
 -----
 * AlphabeticalPropertyNameSniff now ignores method parameters.
 
-1.4
----
+1.4.0
+-----
 * Added unit test scaffolding and a few tests.
 * Made custom sniff code comply with PHPCS standard.
 * Renamed AlphabeticalFunctionNameSniff to AlphabeticalMethodNamesSniff.
