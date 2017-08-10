@@ -9,10 +9,3 @@ Coding Standard
 The ORK PHPCS code is itself intended to comply to the PHPCS standard. To validate this, run:
 
     composer phpcs
-
-Unit Testing
-------------
-
-To run unit tests:
-
-    composer test
