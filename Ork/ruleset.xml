@@ -167,7 +167,9 @@
         <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
     </rule>
     <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
-    <rule ref="Squiz.Commenting.InlineComment"/>
+    <rule ref="Squiz.Commenting.InlineComment">
+        <exclude name="Squiz.Commenting.InlineComment.DocBlock"/>
+    </rule>
     <!-- <rule ref="Squiz.Commenting.LongConditionClosingComment"/> -->
     <rule ref="Squiz.Commenting.PostStatementComment"/>
     <rule ref="Squiz.Commenting.VariableComment">

@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.2
+-----
+* Minor tweaks in new sniffs.
+
 2.0.1
 -----
 * Minor tweaks in new sniffs.
