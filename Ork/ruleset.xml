@@ -143,9 +143,10 @@
     <!-- Squiz -->
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Arrays.ArrayDeclaration">
+        <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned"/>
-        <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
     </rule>
     <rule ref="Squiz.Classes.ClassDeclaration"/>
     <rule ref="Squiz.Classes.ClassFileName"/>
@@ -153,18 +154,25 @@
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
     <rule ref="Squiz.Classes.SelfMemberReference"/>
     <rule ref="Squiz.Classes.ValidClassName"/>
-    <rule ref="Squiz.Commenting.BlockComment"/> -->
-    <rule ref="Squiz.Commenting.ClassComment"/> -->
+    <rule ref="Squiz.Commenting.BlockComment">
+        <exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment"/>
     <!-- <rule ref="Squiz.Commenting.ClosingDeclarationComment"/> -->
-    <rule ref="Squiz.Commenting.DocCommentAlignment"/> -->
-    <rule ref="Squiz.Commenting.EmptyCatchComment"/> -->
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+    <rule ref="Squiz.Commenting.EmptyCatchComment"/>
     <!-- <rule ref="Squiz.Commenting.FileComment"/> -->
-    <rule ref="Squiz.Commenting.FunctionComment"/> -->
-    <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/> -->
-    <rule ref="Squiz.Commenting.InlineComment"/> -->
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
+    <rule ref="Squiz.Commenting.InlineComment"/>
     <!-- <rule ref="Squiz.Commenting.LongConditionClosingComment"/> -->
-    <rule ref="Squiz.Commenting.PostStatementComment"/> -->
-    <rule ref="Squiz.Commenting.VariableComment"/> -->
+    <rule ref="Squiz.Commenting.PostStatementComment"/>
+    <rule ref="Squiz.Commenting.VariableComment">
+        <exclude name="Squiz.Commenting.VariableComment.IncorrectVarType"/>
+    </rule>
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
