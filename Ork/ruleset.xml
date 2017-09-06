@@ -3,9 +3,12 @@
 
     <description>The Ork coding standard.</description>
 
+    <arg value="s"/>
+
     <arg name="colors"/>
     <arg name="encoding" value="utf-8"/>
     <arg name="report" value="full"/>
+    <arg name="report-width" value="132"/>
 
     <!-- Generic -->
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>

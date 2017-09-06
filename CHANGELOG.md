@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.0.3
+-----
+* Added Ork.Operators.ComparisonOperatorUsageSniff to override Squiz.Operators.ComparisonOperatorUsageSniff
+  and allow ternary shortcut operator.
+
 2.0.2
 -----
 * Minor tweaks in new sniffs.
