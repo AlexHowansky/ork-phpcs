@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.4
+-----
+* Updated Ork.PHP.DisallowComparisonAssignment to allow assignments using the null coalesce operator.
+
 2.0.3
 -----
 * Added Ork.Operators.ComparisonOperatorUsageSniff to override Squiz.Operators.ComparisonOperatorUsageSniff
