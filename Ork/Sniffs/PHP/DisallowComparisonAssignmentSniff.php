@@ -103,7 +103,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if (isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
-                if ($phpcsFile->findNext(T_INLINE_THEN, ($stackPtr + 1), null, false, null, true) === false) {
+                if ($phpcsFile->findNext([T_INLINE_THEN, T_COALESCE], ($stackPtr + 1), null, false, null, true) === false) {
                     $error = 'The value of a comparison must not be assigned to a variable';
                     $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
                 }
