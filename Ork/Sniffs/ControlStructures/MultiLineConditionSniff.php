@@ -2,9 +2,9 @@
 /**
  * Ensure multi-line IF conditions are defined correctly.
  *
- * This sniff is based on PEAR.ControlStructures.MultiLineCondition but
- * has been modified to require a new line for the first condition and
- * to expect boolean operators at the end of the line.
+ * Based on PEAR.ControlStructures.MultiLineCondition, with the following changes:
+ *   - Require a new line for the first condition
+ *   - Expect boolean operators at the end of the line
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
@@ -26,10 +26,10 @@ class MultiLineConditionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * The number of spaces code should be indented.
@@ -46,10 +46,10 @@ class MultiLineConditionSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSEIF,
-               );
+        return [
+            T_IF,
+            T_ELSEIF,
+        ];
 
     }//end register()
 
@@ -121,7 +121,9 @@ class MultiLineConditionSniff implements Sniff
                     if ($fix === true) {
                         // Account for a comment at the end of the line.
                         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
-                        if ($tokens[$next]['code'] !== T_COMMENT) {
+                        if ($tokens[$next]['code'] !== T_COMMENT
+                            && isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === false
+                        ) {
                             $phpcsFile->fixer->addNewlineBefore($closeBracket);
                         } else {
                             $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
@@ -148,7 +150,9 @@ class MultiLineConditionSniff implements Sniff
                     $expectedIndent = ($statementIndent + $this->indent);
                 }//end if
 
-                if ($tokens[$i]['code'] === T_COMMENT) {
+                if ($tokens[$i]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true
+                ) {
                     $prevLine = $tokens[$i]['line'];
                     continue;
                 }
@@ -162,10 +166,10 @@ class MultiLineConditionSniff implements Sniff
 
                 if ($expectedIndent !== $foundIndent) {
                     $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found %s';
-                    $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
+                    $data  = [
+                        $expectedIndent,
+                        $foundIndent,
+                    ];
 
                     $fix = $phpcsFile->addFixableError($error, $i, 'Alignment', $data);
                     if ($fix === true) {
@@ -232,7 +236,7 @@ class MultiLineConditionSniff implements Sniff
             return;
         }
 
-        $data = array($length);
+        $data = [$length];
         $code = 'SpaceBeforeOpenBrace';
 
         $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found ';

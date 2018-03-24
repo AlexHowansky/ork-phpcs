@@ -2,16 +2,15 @@
 /**
  * Ensures that the value of a comparison is not assigned to a variable.
  *
- * This sniff is based on Squiz.PHP.DisallowComparisonAssignment, but
- * it allows comparison assignments when cast to a boolean, and it
- * corrects the following issue, which Squiz does not accept as a bug.
+ * Based on Squiz.PHP.DisallowComparisonAssignment, with the following changes:
+ *   - Allows comparison assignments when cast to a boolean
+ *   - Corrects the following issue which Squiz does not accept as a bug:
+ *     https://github.com/squizlabs/PHP_CodeSniffer/issues/616
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- *
- * @see https://github.com/squizlabs/PHP_CodeSniffer/issues/616
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\PHP;
@@ -31,7 +30,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_EQUAL);
+        return [T_EQUAL];
 
     }//end register()
 
@@ -74,11 +73,11 @@ class DisallowComparisonAssignmentSniff implements Sniff
         }
 
         // Ignore function calls.
-        $ignore = array(
-                   T_STRING,
-                   T_WHITESPACE,
-                   T_OBJECT_OPERATOR,
-                  );
+        $ignore = [
+            T_STRING,
+            T_WHITESPACE,
+            T_OBJECT_OPERATOR,
+        ];
 
         $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
         if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS

@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.5
+-----
+* Updated to PHPCS v3.2.3.
+
 2.0.4
 -----
 * Updated Ork.PHP.DisallowComparisonAssignment to allow assignments using the null coalesce operator.

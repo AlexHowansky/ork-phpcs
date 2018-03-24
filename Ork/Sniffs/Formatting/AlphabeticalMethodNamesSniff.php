@@ -30,12 +30,12 @@ class AlphabeticalMethodNamesSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-                T_FUNCTION,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+            T_FUNCTION,
+        ];
 
     }//end register()
 
@@ -64,7 +64,7 @@ class AlphabeticalMethodNamesSniff implements Sniff
         if ($tokens[$stackPtr]['level'] === 1) {
             $methodName = $phpcsFile->getDeclarationName($stackPtr);
             if ($this->lastMethodName !== null && $methodName <= $this->lastMethodName) {
-                $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', array($methodName));
+                $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', [$methodName]);
             }
 
             $this->lastMethodName = $methodName;

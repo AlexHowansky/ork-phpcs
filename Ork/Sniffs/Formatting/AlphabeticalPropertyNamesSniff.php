@@ -30,12 +30,12 @@ class AlphabeticalPropertyNamesSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-                T_VARIABLE,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+            T_VARIABLE,
+        ];
 
     }//end register()
 
@@ -68,7 +68,7 @@ class AlphabeticalPropertyNamesSniff implements Sniff
                 && $propertyName <= $this->lastPropertyName
                 && array_key_exists('nested_parenthesis', $tokens[$stackPtr]) === false
             ) {
-                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', array($propertyName));
+                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', [$propertyName]);
             }
 
             $this->lastPropertyName = $propertyName;
