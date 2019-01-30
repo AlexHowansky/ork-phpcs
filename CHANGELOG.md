@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.6
+-----
+* Updated to PHPCS v3.4.0.
+
 2.0.5
 -----
 * Updated to PHPCS v3.2.3.
