@@ -60,7 +60,7 @@
     <!-- <rule ref="Generic.Formatting.SpaceAfterNot"/> -->
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
-    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+    <!-- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/> -->
     <!-- <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/> -->
     <rule ref="Generic.Metrics.CyclomaticComplexity"/>
     <rule ref="Generic.Metrics.NestingLevel"/>
@@ -95,15 +95,8 @@
         <exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"/>
     </rule>
     <!-- <rule ref="PEAR.Commenting.ClassComment"/> --> 
-    <rule ref="PEAR.Commenting.FileComment">
-        <exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingAuthorTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingLicenseTag"/>
-        <exclude name="PEAR.Commenting.FileComment.MissingLinkTag"/>
-        <exclude name="PEAR.Commenting.FileComment.EmptyCopyrightTag"/>
-    </rule>
-    <rule ref="PEAR.Commenting.FunctionComment"/>
+    <!-- <rule ref="PEAR.Commenting.FileComment"/> -->
+    <!-- <rule ref="PEAR.Commenting.FunctionComment"/> -->
     <rule ref="PEAR.Commenting.InlineComment"/>
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
     <!-- <rule ref="PEAR.ControlStructures.MultiLineCondition"/> -->

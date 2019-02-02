@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2.0.7
+-----
+* Removed some redundant tests.
+
 2.0.6
 -----
 * Updated to PHPCS v3.4.0.
