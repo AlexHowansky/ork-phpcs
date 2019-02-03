@@ -139,6 +139,7 @@
     <!-- Squiz -->
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Arrays.ArrayDeclaration">
+        <exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
