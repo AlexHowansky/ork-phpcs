@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.9
+
+* Removed redundant Squiz.Operators.ComparisonOperatorUsage sniff.
+
 ## 2.0.8
 
 * Removed Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned sniff.

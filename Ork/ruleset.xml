@@ -217,7 +217,7 @@
         <exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
     </rule>
     <rule ref="Squiz.Objects.ObjectMemberComma"/>
-    <rule ref="Squiz.Operators.ComparisonOperatorUsage"/>
+    <!-- <rule ref="Squiz.Operators.ComparisonOperatorUsage"/> -->
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
