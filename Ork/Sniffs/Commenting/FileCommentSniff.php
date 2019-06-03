@@ -116,7 +116,7 @@ class FileCommentSniff implements Sniff
 
         // Exactly one blank line between the open tag and the file comment.
         if ($tokens[$commentStart]['line'] !== ($tokens[$stackPtr]['line'] + 2)) {
-            $error = 'There must be no blank lines before the file comment';
+            $error = 'There must be exactly one blank line before the file comment';
             $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
         }
 

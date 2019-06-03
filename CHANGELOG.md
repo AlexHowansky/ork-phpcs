@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.10
+
+* Resolved issue #1.
+
 ## 2.0.9
 
 * Removed redundant Squiz.Operators.ComparisonOperatorUsage sniff.
