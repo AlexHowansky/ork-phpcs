@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.11
+
+* Removed conflicting Squiz.ControlStructures.ElseIfDeclaration sniff.
+
 ## 2.0.10
 
 * Resolved issue #1.
