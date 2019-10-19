@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.12
+
+* Removed Squiz.WhiteSpace.ObjectOperatorSpacing.Before sniff to allow
+  stacking chained method calls over multiple lines.
+
 ## 2.0.11
 
 * Removed conflicting Squiz.ControlStructures.ElseIfDeclaration sniff.
