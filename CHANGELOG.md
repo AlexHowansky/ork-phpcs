@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Convert method and property names to lowercase in Ork.Formatting before
+  checking for alphabetical order.
+
 ## 2.0.12
 
 * Removed Squiz.WhiteSpace.ObjectOperatorSpacing.Before sniff to allow

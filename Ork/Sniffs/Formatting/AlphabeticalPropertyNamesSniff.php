@@ -65,13 +65,13 @@ class AlphabeticalPropertyNamesSniff implements Sniff
         if ($tokens[$stackPtr]['level'] === 1) {
             $propertyName = substr($tokens[$stackPtr]['content'], 1);
             if ($this->lastPropertyName !== null
-                && $propertyName <= $this->lastPropertyName
+                && strtolower($propertyName) <= $this->lastPropertyName
                 && array_key_exists('nested_parenthesis', $tokens[$stackPtr]) === false
             ) {
                 $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', [$propertyName]);
             }
 
-            $this->lastPropertyName = $propertyName;
+            $this->lastPropertyName = strtolower($propertyName);
         }
 
     }//end process()

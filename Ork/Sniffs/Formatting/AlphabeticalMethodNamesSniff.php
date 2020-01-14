@@ -63,11 +63,11 @@ class AlphabeticalMethodNamesSniff implements Sniff
         // We only care about class methods, so ignore global functions (level 0).
         if ($tokens[$stackPtr]['level'] === 1) {
             $methodName = $phpcsFile->getDeclarationName($stackPtr);
-            if ($this->lastMethodName !== null && $methodName <= $this->lastMethodName) {
+            if ($this->lastMethodName !== null && strtolower($methodName) <= $this->lastMethodName) {
                 $phpcsFile->addError('Method "%s" is not in alphabetical order.', $stackPtr, 'OutOfOrder', [$methodName]);
             }
 
-            $this->lastMethodName = $methodName;
+            $this->lastMethodName = strtolower($methodName);
         }
 
     }//end process()
