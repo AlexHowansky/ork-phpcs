@@ -1,0 +1,9 @@
+------------------------------------------------------------------------------------------------------------------
+FOUND 4 ERRORS AFFECTING 4 LINES
+------------------------------------------------------------------------------------------------------------------
+  6 | ERROR | Method "_a" is not in alphabetical order. (Ork.Formatting.AlphabeticalMethodNames.OutOfOrder)
+  9 | ERROR | Method "c" is not in alphabetical order. (Ork.Formatting.AlphabeticalMethodNames.OutOfOrder)
+ 11 | ERROR | Method "getBoxes" is not in alphabetical order.
+    |       | (Ork.Formatting.AlphabeticalMethodNames.OutOfOrder)
+ 12 | ERROR | Method "_z" is not in alphabetical order. (Ork.Formatting.AlphabeticalMethodNames.OutOfOrder)
+------------------------------------------------------------------------------------------------------------------

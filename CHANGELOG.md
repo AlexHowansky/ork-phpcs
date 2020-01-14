@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.0
+
+* Updated Ork.Formatting.AlphabeticalPropertyNames and
+  Ork.Formatting.AlphabeticalMethodNames to be case insensitive.
+* Added unit tests.
+
 ## 2.0.12
 
 * Removed Squiz.WhiteSpace.ObjectOperatorSpacing.Before sniff to allow

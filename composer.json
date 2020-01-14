@@ -12,9 +12,10 @@
         }
     ],
     "require": {
-        "squizlabs/php_codesniffer": "^3.5.1"
+        "squizlabs/php_codesniffer": "^3.5.3"
     },
     "scripts": {
-        "phpcs": "phpcs"
+        "phpcs": "phpcs",
+        "test": "cd tests && ./test.sh"
     }
 }
