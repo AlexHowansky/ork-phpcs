@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.0
+
+* Added new PSR12 sniffs.
+
 ## 2.1.0
 
 * Updated Ork.Formatting.AlphabeticalPropertyNames and

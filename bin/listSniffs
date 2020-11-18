@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT_NAME=$(basename "${BASH_SOURCE[0]}")
+VENDOR_DIR=${SCRIPT_DIR}/../vendor
+
+if [ ! -d ${VENDOR_DIR} ]
+then
+    echo "No vendor directory is present, run 'composer install'"
+    exit 1
+fi
+
+BASE=${VENDOR_DIR}/squizlabs/php_codesniffer/src
+
+for STANDARD in $(ls ${BASE}/Standards)
+do
+    for GROUP in $(ls ${BASE}/Standards/${STANDARD}/Sniffs)
+    do
+        for SNIFF in $(ls ${BASE}/Standards/${STANDARD}/Sniffs/${GROUP})
+        do
+            echo ${STANDARD}.${GROUP}.${SNIFF%*Sniff.php}
+        done
+    done
+done

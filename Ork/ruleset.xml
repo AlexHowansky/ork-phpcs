@@ -11,11 +11,13 @@
     <arg name="report-width" value="132"/>
 
     <!-- Generic -->
+    <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <!-- <rule ref="Generic.Arrays.DisallowShortArraySyntax"/> -->
     <rule ref="Generic.Classes.DuplicateClassName"/>
     <!-- <rule ref="Generic.Classes.OpeningBraceSameLine"/> -->
     <!-- <rule ref="Generic.CodeAnalysis.AssignmentInCondition"/> -->
+    <rule ref="Generic.CodeAnalysis.EmptyPHPStatement"/>
     <rule ref="Generic.CodeAnalysis.EmptyStatement">
         <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCATCH"/>
     </rule>
@@ -29,6 +31,7 @@
     <rule ref="Generic.Commenting.DocComment"/>
     <rule ref="Generic.Commenting.Fixme"/>
     <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <!-- <rule ref="Generic.Debug.ClosureLinter"/> -->
     <!-- <rule ref="Generic.Debug.CSSLint"/> -->
@@ -37,6 +40,7 @@
     <rule ref="Generic.Files.ByteOrderMark"/>
     <rule ref="Generic.Files.EndFileNewline"/>
     <!-- <rule ref="Generic.Files.EndFileNoNewline"/> -->
+    <rule ref="Generic.Files.ExecutableFile"/>
     <rule ref="Generic.Files.InlineHTML"/>
     <rule ref="Generic.Files.LineEndings">
         <properties>
@@ -52,11 +56,13 @@
     <!-- <rule ref="Generic.Files.LowercasedFilename"/> -->
     <rule ref="Generic.Files.OneClassPerFile"/>
     <rule ref="Generic.Files.OneInterfacePerFile"/>
+    <rule ref="Generic.Files.OneObjectStructurePerFile"/>
     <rule ref="Generic.Files.OneTraitPerFile"/>
     <!-- <rule ref="Generic.Formatting.DisallowMultipleStatements"/> -->
     <!-- <rule ref="Generic.Formatting.MultipleStatementAlignment"/> -->
     <!-- <rule ref="Generic.Formatting.NoSpaceAfterCast"/> -->
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <!-- <rule ref="Generic.Formatting.SpaceBeforeCast"/> -->
     <!-- <rule ref="Generic.Formatting.SpaceAfterNot"/> -->
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
@@ -72,7 +78,9 @@
     <!-- <rule ref="Generic.PHP.ClosingPHPTag"/> -->
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
+    <rule ref="Generic.PHP.DisallowRequestSuperglobal"/>
     <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+    <rule ref="Generic.PHP.DiscourageGoto"/>
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
             <property name="forbiddenFunctions" type="array" value="eval=>null,exec=>null,shell_exec=>null,sizeof=>count,delete=>unset,print=>echo,create_function=>null"/>
@@ -80,15 +88,40 @@
     </rule>
     <rule ref="Generic.PHP.LowerCaseConstant"/>
     <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.PHP.LowerCaseType"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <!-- <rule ref="Generic.PHP.RequireStrictTypes"/> -->
     <rule ref="Generic.PHP.SAPIUsage"/>
     <rule ref="Generic.PHP.Syntax"/>
     <!-- <rule ref="Generic.PHP.UpperCaseConstant"/> -->
     <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
     <!-- <rule ref="Generic.VersionControl.SubversionProperties"/> -->
+    <rule ref="Generic.VersionControl.GitMergeConflict"/>
     <!-- <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/> -->
+    <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+    <rule ref="Generic.WhiteSpace.SpreadOperatorSpacingAfter"/>
+
+    <!-- MySource -->
+    <!-- <rule ref="MySource.CSS.BrowserSpecificStyles"/> -->
+    <!-- <rule ref="MySource.Channels.DisallowSelfActions"/> -->
+    <!-- <rule ref="MySource.Channels.IncludeOwnSystem"/> -->
+    <!-- <rule ref="MySource.Channels.IncludeSystem"/> -->
+    <!-- <rule ref="MySource.Channels.UnusedSystem"/> -->
+    <!-- <rule ref="MySource.Commenting.FunctionComment"/> -->
+    <!-- <rule ref="MySource.Debug.DebugCode"/> -->
+    <!-- <rule ref="MySource.Debug.FirebugConsole"/> -->
+    <!-- <rule ref="MySource.Objects.AssignThis"/> -->
+    <!-- <rule ref="MySource.Objects.CreateWidgetTypeCallback"/> -->
+    <!-- <rule ref="MySource.Objects.DisallowNewWidget"/> -->
+    <!-- <rule ref="MySource.PHP.AjaxNullComparison"/> -->
+    <!-- <rule ref="MySource.PHP.EvalObjectFactory"/> -->
+    <!-- <rule ref="MySource.PHP.GetRequestData"/> -->
+    <!-- <rule ref="MySource.PHP.ReturnFunctionValue"/> -->
+    <!-- <rule ref="MySource.Strings.JoinStrings"/> -->
 
     <!-- PEAR -->
     <rule ref="PEAR.Classes.ClassDeclaration">
@@ -130,6 +163,24 @@
     <rule ref="PSR2.Methods.MethodDeclaration"/>
     <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
     <rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+    <!-- PSR-12 -->
+    <rule ref="PSR12.Classes.AnonClassDeclaration"/>
+    <rule ref="PSR12.Classes.ClassInstantiation"/>
+    <rule ref="PSR12.Classes.ClosingBrace"/>
+    <rule ref="PSR12.ControlStructures.BooleanOperatorPlacement"/>
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="PSR12.Files.DeclareStatement"/>
+    <rule ref="PSR12.Files.FileHeader"/>
+    <rule ref="PSR12.Files.ImportStatement"/>
+    <rule ref="PSR12.Files.OpenTag"/>
+    <rule ref="PSR12.Functions.NullableTypeDeclaration"/>
+    <rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
+    <rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
+    <rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
+    <rule ref="PSR12.Operators.OperatorSpacing"/>
+    <rule ref="PSR12.Properties.ConstantVisibility"/>
+    <!-- <rule ref="PSR12.Traits.UseDeclaration"/> -->
 
     <!-- Zend -->
     <!-- <rule ref="Zend.Debug.CodeAnalyzer"/> -->
@@ -193,7 +244,7 @@
     <!-- <rule ref="Squiz.CSS.EmptyClassDefinition"/> -->
     <!-- <rule ref="Squiz.CSS.EmptyStyleDefinition"/> -->
     <!-- <rule ref="Squiz.CSS.ForbiddenStyles"/> -->
-    <!-- <rule ref="Squiz.CSS.ndentation"/> -->
+    <!-- <rule ref="Squiz.CSS.Indentation"/> -->
     <!-- <rule ref="Squiz.CSS.LowercaseStyleDefinition"/> -->
     <!-- <rule ref="Squiz.CSS.MissingColon"/> -->
     <!-- <rule ref="Squiz.CSS.NamedColours"/> -->

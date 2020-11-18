@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+if [ ${#} -ne 1 ]
+then
+    echo "Usage: ${0} <ruleset>"
+    exit 1
+fi
+
+RULESET=${1}
+if [ ! -f "${RULESET}" ]
+then
+    echo "No such ruleset file: ${RULESET}"
+    exit 1
+fi
+
+for SNIFF in $(${SCRIPT_DIR}/listSniffs)
+do
+    grep -q "rule ref=\"${SNIFF}\"" ${RULESET} || echo ${SNIFF}
+done
