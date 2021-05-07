@@ -3,8 +3,8 @@
  * Ensures class properties are declared in alphabetical order.
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
- * @copyright 2016 Alex Howansky (https://github.com/AlexHowansky)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @copyright 2016-2021 Alex Howansky (https://github.com/AlexHowansky)
+ * @license   https://github.com/AlexHowansky/ork-phpcs/blob/master/LICENSE MIT License
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\Formatting;

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.3.0
+
+* Added new Generic sniffs.
+
 ## 2.2.0
 
 * Added new PSR12 sniffs.
