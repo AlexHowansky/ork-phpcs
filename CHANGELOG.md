@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.4.0
+
+* Removed Squiz.Commenting.FunctionComment.MissingParamTag and
+  Squiz.Commenting.FunctionComment.MissingReturn because this
+  functionality now should be provided by native typehints.
+
 ## 2.3.0
 
 * Added new Generic sniffs.
