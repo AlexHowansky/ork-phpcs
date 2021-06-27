@@ -143,7 +143,9 @@
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
     <rule ref="PEAR.NamingConventions.ValidClassName"/>
     <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
-    <rule ref="PEAR.NamingConventions.ValidVariableName"/>
+    <rule ref="PEAR.NamingConventions.ValidVariableName">
+        <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+    </rule>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
     <!-- <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/> -->
     <rule ref="PEAR.WhiteSpace.ScopeIndent"/>
@@ -218,6 +220,8 @@
         <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
         <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
         <exclude name="Squiz.Commenting.FunctionComment.MissingReturn"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamName"/>
     </rule>
     <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
     <rule ref="Squiz.Commenting.InlineComment">

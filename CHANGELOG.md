@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.5.0
+
+* Removed PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore because
+  it should have never been there.
+* Removed Squiz.Commenting.FunctionComment.SpacingAfterParamType and
+  Squiz.Commenting.FunctionComment.SpacingAfterParamName because they're really
+  counterproductive when using the new compound types.
+
 ## 2.4.0
 
 * Removed Squiz.Commenting.FunctionComment.MissingParamTag and
