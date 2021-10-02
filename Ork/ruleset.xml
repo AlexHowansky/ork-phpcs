@@ -3,8 +3,10 @@
 
     <description>The Ork coding standard.</description>
 
+    <arg value="p"/>
     <arg value="s"/>
 
+    <arg name="cache" value=".phpcs-cache"/>
     <arg name="colors"/>
     <arg name="encoding" value="utf-8"/>
     <arg name="report" value="full"/>

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.5.1
+
+* Added progress indicator and cache arguments to the default configuration.
+
 ## 2.5.0
 
 * Removed PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore because
