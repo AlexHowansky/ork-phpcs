@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.5.2
+
+* Removed redundant sniff Generic.Files.EndFileNewline.
+
 ## 2.5.1
 
 * Added progress indicator and cache arguments to the default configuration.
