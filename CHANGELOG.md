@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.6.0
+
+* Removed PEAR.Commenting.ClassComment because it's redundant when you're
+  already using PSR-4.
+* Removed Squiz.PHP.DisallowBooleanStatement because I sometimes like to
+  do that.
+* Fixed some unit tests.
+
 ## 2.5.2
 
 * Removed redundant sniff Generic.Files.EndFileNewline.

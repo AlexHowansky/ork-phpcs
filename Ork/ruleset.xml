@@ -132,7 +132,7 @@
     <rule ref="PEAR.Classes.ClassDeclaration">
         <exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"/>
     </rule>
-    <!-- <rule ref="PEAR.Commenting.ClassComment"/> --> 
+    <!-- <rule ref="PEAR.Commenting.ClassComment"/> -->
     <!-- <rule ref="PEAR.Commenting.FileComment"/> -->
     <!-- <rule ref="PEAR.Commenting.FunctionComment"/> -->
     <rule ref="PEAR.Commenting.InlineComment"/>
@@ -283,7 +283,7 @@
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
-    <rule ref="Squiz.PHP.DisallowBooleanStatement"/>
+    <!-- <rule ref="Squiz.PHP.DisallowBooleanStatement"/> -->
     <!-- <rule ref="Squiz.PHP.DisallowComparisonAssignment"/> -->
     <!-- <rule ref="Squiz.PHP.DisallowInlineIf"/> -->
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
