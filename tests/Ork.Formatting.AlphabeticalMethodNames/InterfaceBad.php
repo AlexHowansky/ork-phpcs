@@ -1,6 +1,6 @@
 <?php
 
-interface FooIntercace
+interface FooInterface
 {
     protected function a() { }
     protected function _a() { }

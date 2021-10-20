@@ -1,9 +1,0 @@
-----------------------------------------------------------------------------------------------------------------------
-FOUND 4 ERRORS AFFECTING 4 LINES
-----------------------------------------------------------------------------------------------------------------------
-  6 | ERROR | Property "_a" is not in alphabetical order. (Ork.Formatting.AlphabeticalPropertyNames.OutOfOrder)
- 11 | ERROR | Property "c" is not in alphabetical order. (Ork.Formatting.AlphabeticalPropertyNames.OutOfOrder)
- 13 | ERROR | Property "getBoxes" is not in alphabetical order.
-    |       | (Ork.Formatting.AlphabeticalPropertyNames.OutOfOrder)
- 14 | ERROR | Property "_z" is not in alphabetical order. (Ork.Formatting.AlphabeticalPropertyNames.OutOfOrder)
-----------------------------------------------------------------------------------------------------------------------
