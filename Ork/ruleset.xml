@@ -150,7 +150,7 @@
     </rule>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
     <!-- <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/> -->
-    <rule ref="PEAR.WhiteSpace.ScopeIndent"/>
+    <!-- <rule ref="PEAR.WhiteSpace.ScopeIndent"/> -->
 
     <!-- PSR-1 -->
     <rule ref="PSR1.Classes.ClassDeclaration"/>
@@ -243,7 +243,9 @@
         <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
     </rule>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-    <rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
+    <rule ref="Squiz.ControlStructures.SwitchDeclaration">
+        <exclude name="Squiz.ControlStructures.SwitchDeclaration.BreakIndent"/>
+    </rule>
     <!-- <rule ref="Squiz.CSS.ClassDefinitionClosingBraceSpace"/> -->
     <!-- <rule ref="Squiz.CSS.ClassDefinitionNameSpacing"/> -->
     <!-- <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace"/> -->

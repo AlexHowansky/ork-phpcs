@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.7.0
+
+* Removed PEAR.WhiteSpace.ScopeIndent because it conflicts with the desired
+  settings for Squiz.ControlStructures.SwitchDeclaration.
+* Removed Squiz.ControlStructures.SwitchDeclaration.BreakIndent because it
+  expects the same indent level as the case itself.
+
 ## 2.6.0
 
 * Removed PEAR.Commenting.ClassComment because it's redundant when you're
