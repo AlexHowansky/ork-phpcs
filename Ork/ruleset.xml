@@ -175,6 +175,7 @@
     <rule ref="PSR12.Classes.AnonClassDeclaration"/>
     <rule ref="PSR12.Classes.ClassInstantiation"/>
     <rule ref="PSR12.Classes.ClosingBrace"/>
+    <!-- <rule ref="PSR12.Classes.OpeningBraceSpace"/> -->
     <rule ref="PSR12.ControlStructures.BooleanOperatorPlacement"/>
     <rule ref="PSR12.ControlStructures.ControlStructureSpacing"/>
     <rule ref="PSR12.Files.DeclareStatement"/>

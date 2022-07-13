@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.7.1
+
+* Dependency update.
+
 ## 2.7.0
 
 * Removed PEAR.WhiteSpace.ScopeIndent because it conflicts with the desired
