@@ -236,7 +236,7 @@
     <rule ref="Squiz.Commenting.VariableComment">
         <exclude name="Squiz.Commenting.VariableComment.IncorrectVarType"/>
         <exclude name="Squiz.Commenting.VariableComment.Missing"/>
-
+        <exclude name="Squiz.Commenting.VariableComment.MissingVar"/>
     </rule>
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <!-- <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/> -->

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.8.1
+
+* Removed Squiz.Commenting.VariableComment.MissingVar so we can still have
+  plain comments.
+
 ## 2.8.0
 
 * Removed the requirement for the Squiz.Commenting.FunctionComment.Missing and
