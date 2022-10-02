@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.8.0
+
+* Removed the requirement for the Squiz.Commenting.FunctionComment.Missing and
+  Squiz.Commenting.VariableComment.Missing sniffs because native type hinting
+  often makes their use redundant.
+
 ## 2.7.1
 
 * Dependency update.
