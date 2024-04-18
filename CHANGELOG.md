@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2.8.3
+
+* Updated to the new maintainer's repo.
+* Enabled new RequireExplicitBooleanOperatorPrecedence sniff.
+
+## 2.8.2
+
+* Dependency update.
+
 ## 2.8.1
 
 * Removed Squiz.Commenting.VariableComment.MissingVar so we can still have
