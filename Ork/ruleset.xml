@@ -145,7 +145,9 @@
     <!-- <rule ref="PEAR.Functions.FunctionDeclaration"/> -->
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
     <rule ref="PEAR.NamingConventions.ValidClassName"/>
-    <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
+    <rule ref="PEAR.NamingConventions.ValidFunctionName">
+        <exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
+    </rule>
     <rule ref="PEAR.NamingConventions.ValidVariableName">
         <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
     </rule>
@@ -214,7 +216,9 @@
     <rule ref="Squiz.Commenting.BlockComment">
         <exclude name="Squiz.Commenting.BlockComment.WrongStart"/>
     </rule>
-    <rule ref="Squiz.Commenting.ClassComment"/>
+    <rule ref="Squiz.Commenting.ClassComment">
+        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
+    </rule>
     <!-- <rule ref="Squiz.Commenting.ClosingDeclarationComment"/> -->
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
     <rule ref="Squiz.Commenting.EmptyCatchComment"/>
@@ -279,8 +283,12 @@
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
-    <rule ref="Squiz.NamingConventions.ValidFunctionName"/>
-    <rule ref="Squiz.NamingConventions.ValidVariableName"/>
+    <rule ref="Squiz.NamingConventions.ValidFunctionName">
+        <exclude name="Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
+    </rule>
+    <rule ref="Squiz.NamingConventions.ValidVariableName">
+        <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+    </rule>
     <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
     <rule ref="Squiz.Objects.ObjectInstantiation">
         <exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
