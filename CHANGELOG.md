@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2.10.0
+
+* Updated forbiddenFunctions XML syntax.
+* Removed the following deprecated and unused sniffs:
+  *  Generic.Functions.CallTimePassByReference
+  *  Squiz.Classes.DuplicateProperty
+  *  Squiz.Objects.DisallowObjectStringIndex
+  *  Squiz.Objects.ObjectMemberComma
+  *  Squiz.WhiteSpace.LanguageConstructSpacing
+  *  Squiz.WhiteSpace.PropertyLabelSpacing
+
+## 2.9.0
+
+* Enabled new Generic.Strings.UnnecessaryHeredoc sniff.
+* Enabled new Generic.WhiteSpace.HereNowdocIdentifierSpacings sniff.
+
 ## 2.8.3
 
 * Updated to the new maintainer's repo.
