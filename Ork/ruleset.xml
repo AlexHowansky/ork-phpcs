@@ -67,7 +67,7 @@
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <!-- <rule ref="Generic.Formatting.SpaceBeforeCast"/> -->
     <!-- <rule ref="Generic.Formatting.SpaceAfterNot"/> -->
-    <rule ref="Generic.Functions.CallTimePassByReference"/>
+    <!-- <rule ref="Generic.Functions.CallTimePassByReference"/> -->
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
     <!-- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/> -->
     <!-- <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/> -->
@@ -89,7 +89,17 @@
     <rule ref="Generic.PHP.DiscourageGoto"/>
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
-            <property name="forbiddenFunctions" type="array" value="eval=>null,exec=>null,shell_exec=>null,sizeof=>count,delete=>unset,print=>echo,create_function=>null"/>
+            <property name="forbiddenFunctions" type="array">
+                <element key="create_function" value="null"/>
+                <element key="delete" value="unset"/>
+                <element key="eval" value="null"/>
+                <element key="exec" value="null"/>
+                <element key="is_null" value="null"/>
+                <element key="print" value="echo"/>
+                <element key="shell_exec" value="null"/>
+                <element key="sizeof" value="count"/>
+                <element key="system" value="null"/>
+            </property>
         </properties>
     </rule>
     <rule ref="Generic.PHP.LowerCaseConstant"/>
@@ -211,7 +221,7 @@
     </rule>
     <rule ref="Squiz.Classes.ClassDeclaration"/>
     <rule ref="Squiz.Classes.ClassFileName"/>
-    <rule ref="Squiz.Classes.DuplicateProperty"/>
+    <!-- <rule ref="Squiz.Classes.DuplicateProperty"/> -->
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
     <rule ref="Squiz.Classes.SelfMemberReference"/>
     <rule ref="Squiz.Classes.ValidClassName"/>
@@ -291,11 +301,11 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName">
         <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
     </rule>
-    <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
+    <!-- <rule ref="Squiz.Objects.DisallowObjectStringIndex"/> -->
     <rule ref="Squiz.Objects.ObjectInstantiation">
         <exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
     </rule>
-    <rule ref="Squiz.Objects.ObjectMemberComma"/>
+    <!-- <rule ref="Squiz.Objects.ObjectMemberComma"/> -->
     <!-- <rule ref="Squiz.Operators.ComparisonOperatorUsage"/> -->
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
@@ -335,7 +345,7 @@
             <property name="spacing" value="1"/>
         </properties>
     </rule>
-    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+    <!-- <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/> -->
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
@@ -346,7 +356,7 @@
             <property name="ignoreNewlines" value="true"/>
         </properties>
     </rule>
-    <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing"/>
+    <!-- <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing"/> -->
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
