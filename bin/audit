@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+if [ ${#} -ne 1 ]
+then
+    echo "Usage: ${0} <ruleset>"
+    exit 1
+fi
+
+RULESET=${1}
+if [ ! -f "${RULESET}" ]
+then
+    echo "No such ruleset file: ${RULESET}"
+    exit 1
+fi
+
+SNIFFS=$("${SCRIPT_DIR}/listSniffs")
+
+echo "The following sniffs should be added to the ruleset file:"
+for SNIFF in ${SNIFFS}
+do
+    grep -q "rule ref=\"${SNIFF}\"" "${RULESET}" || echo "${SNIFF}"
+done
+
+echo
+echo "The following sniffs should be removed from the ruleset file:"
+for SNIFF in $(grep 'rule ref="' ../Ork/ruleset.xml | cut -d'"' -f2)
+do
+    echo "${SNIFFS}" | grep -q "${SNIFF}" || echo "${SNIFF}"
+done

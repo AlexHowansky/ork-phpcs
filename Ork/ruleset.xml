@@ -111,6 +111,7 @@
     <!-- <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/> -->
     <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+    <rule ref="Generic.WhiteSpace.GotoTargetSpacing"/>
     <rule ref="Generic.WhiteSpace.HereNowdocIdentifierSpacing"/>
     <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
     <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
@@ -266,12 +267,10 @@
     <!-- <rule ref="Squiz.PHP.DisallowComparisonAssignment"/> -->
     <!-- <rule ref="Squiz.PHP.DisallowInlineIf"/> -->
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
-    <!-- <rule ref="Squiz.PHP.DisallowObEndFlush"/> -->
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
     <rule ref="Squiz.PHP.EmbeddedPhp"/>
     <!-- <rule ref="Squiz.PHP.Eval"/> -->
-    <!-- <rule ref="Squiz.PHP.ForbiddenFunctions"/> -->
     <rule ref="Squiz.PHP.GlobalKeyword"/>
     <rule ref="Squiz.PHP.Heredoc"/>
     <rule ref="Squiz.PHP.InnerFunctions"/>

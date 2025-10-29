@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.0
+
+* Updated to PHPCS v4.
+
 ## 2.10.0
 
 * Updated forbiddenFunctions XML syntax.
