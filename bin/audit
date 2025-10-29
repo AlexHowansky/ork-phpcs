@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Verifies that all available sniffs are accounted for in the ruleset file,
+# and that the ruleset file doesn't refer to any sniffs that no longer exist.
+
 SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 if [ ${#} -ne 1 ]
@@ -25,7 +28,7 @@ done
 
 echo
 echo "The following sniffs should be removed from the ruleset file:"
-for SNIFF in $(grep 'rule ref="' ../Ork/ruleset.xml | cut -d'"' -f2)
+for SNIFF in $(grep 'rule ref="' "${RULESET}" | cut -d'"' -f2)
 do
     echo "${SNIFFS}" | grep -q "${SNIFF}" || echo "${SNIFF}"
 done

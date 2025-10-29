@@ -3,7 +3,7 @@
  * Ensures class methods are declared in alphabetical order.
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
- * @copyright 2016-2021 Alex Howansky (https://github.com/AlexHowansky)
+ * @copyright 2016-2025 Alex Howansky (https://github.com/AlexHowansky)
  * @license   https://github.com/AlexHowansky/ork-phpcs/blob/master/LICENSE MIT License
  */
 

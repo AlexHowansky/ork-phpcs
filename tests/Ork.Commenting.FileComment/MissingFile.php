@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Foo
+ */
+class Foo
+{
+}

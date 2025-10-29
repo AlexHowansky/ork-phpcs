@@ -1,0 +1,77 @@
+--- FileCommentSniff.php.orig	2025-10-29 17:29:55.143672634 -0400
++++ FileCommentSniff.php	2025-10-29 17:27:49.330376111 -0400
+@@ -2,13 +2,18 @@
+ /**
+  * Parses and verifies the file doc comment.
+  *
++ * Based on Squiz.Commenting.FileComment, with the following changes:
++ *   - Change "No blank line between the open tag and the file comment" to "Exactly one"
++ *   - Remove required tags: @subpackage, @author
++ *
++ * @author    Alex Howansky <alex.howansky@gmail.com>
+  * @author    Greg Sherwood <gsherwood@squiz.net>
+  * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+  * @copyright 2023 PHPCSStandards and contributors
+  * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
+  */
+ 
+-namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
++namespace PHP_CodeSniffer\Standards\Ork\Sniffs\Commenting;
+ 
+ use PHP_CodeSniffer\Files\File;
+ use PHP_CodeSniffer\Sniffs\Sniff;
+@@ -23,8 +28,6 @@
+      */
+     private const REQUIRED_TAGS = [
+         '@package'    => true,
+-        '@subpackage' => true,
+-        '@author'     => true,
+         '@copyright'  => true,
+     ];
+ 
+@@ -122,12 +125,6 @@
+ 
+         $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
+ 
+-        // No blank line between the open tag and the file comment.
+-        if ($tokens[$commentStart]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
+-            $error = 'There must be no blank lines before the file comment';
+-            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
+-        }
+-
+         // Exactly one blank line after the file comment.
+         $next = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), null, true);
+         if ($next !== false && $tokens[$next]['line'] !== ($tokens[$commentEnd]['line'] + 2)) {
+@@ -159,32 +156,6 @@
+                 $phpcsFile->addError($error, $tag, 'Empty' . ucfirst(substr($name, 1)) . 'Tag', $data);
+                 continue;
+             }
+-
+-            if ($name === '@author') {
+-                if ($tokens[$string]['content'] !== 'Squiz Pty Ltd <products@squiz.net>') {
+-                    $error = 'Expected "Squiz Pty Ltd <products@squiz.net>" for author tag';
+-                    $fix   = $phpcsFile->addFixableError($error, $tag, 'IncorrectAuthor');
+-                    if ($fix === true) {
+-                        $expected = 'Squiz Pty Ltd <products@squiz.net>';
+-                        $phpcsFile->fixer->replaceToken($string, $expected);
+-                    }
+-                }
+-            } elseif ($name === '@copyright') {
+-                if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $tokens[$string]['content']) === 0) {
+-                    $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
+-                    $fix   = $phpcsFile->addFixableError($error, $tag, 'IncorrectCopyright');
+-                    if ($fix === true) {
+-                        $matches = [];
+-                        preg_match('/^(([0-9]{4})(-[0-9]{4})?)?.*$/', $tokens[$string]['content'], $matches);
+-                        if (isset($matches[1]) === false) {
+-                            $matches[1] = date('Y');
+-                        }
+-
+-                        $expected = $matches[1] . ' Squiz Pty Ltd (ABN 77 084 670 600)';
+-                        $phpcsFile->fixer->replaceToken($string, $expected);
+-                    }
+-                }
+-            }
+         }
+ 
+         // Check if the tags are in the correct position.

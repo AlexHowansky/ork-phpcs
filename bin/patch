@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Some of our custom sniffs are modifications of PHPCS sniffs, but if those
+# sniffs change, we want the changes. So, we'll save the original patches we
+# made because it'll likely be easier to reapply these then figure out what
+# theirs are.
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT_NAME=$(basename "${BASH_SOURCE[0]}")
+VENDOR_DIR=${SCRIPT_DIR}/../vendor
+PATCH_DIR=${SCRIPT_DIR}/../patches
+SNIFF_DIR=${SCRIPT_DIR}/../Ork/Sniffs
+STANDARDS_DIR=${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards
+
+patch -o "${SNIFF_DIR}/Commenting/FileCommentSniff.php" "${STANDARDS_DIR}/Squiz/Sniffs/Commenting/FileCommentSniff.php" "${PATCH_DIR}/Commenting/FileCommentSniff.php"

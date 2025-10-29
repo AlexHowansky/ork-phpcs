@@ -1,0 +1,6 @@
+-----------------------------------------------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+-----------------------------------------------------------------------------------------------------------
+ 6 | ERROR | The tag in position 1 should be the @package tag (Ork.Commenting.FileComment.PackageTagOrder)
+ 7 | ERROR | Missing @package tag in file comment (Ork.Commenting.FileComment.MissingPackageTag)
+-----------------------------------------------------------------------------------------------------------

@@ -8,39 +8,39 @@
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2023 PHPCSStandards and contributors
+ * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\Commenting;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 class FileCommentSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
+     * Required tags in correct order.
      *
-     * @var array
+     * @var array<string, true>
      */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
+    private const REQUIRED_TAGS = [
+        '@package'    => true,
+        '@copyright'  => true,
     ];
 
 
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return array<int|string>
      */
     public function register()
     {
         return [T_OPEN_TAG];
-
-    }//end register()
+    }
 
 
     /**
@@ -52,21 +52,19 @@ class FileCommentSniff implements Sniff
      *
      * @return int
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, int $stackPtr)
     {
-        $this->currentFile = $phpcsFile;
-
         $tokens       = $phpcsFile->getTokens();
         $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a file comment', $commentStart, 'WrongStyle');
             $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
-            return ($phpcsFile->numTokens + 1);
-        } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT_OPEN_TAG) {
+            return $phpcsFile->numTokens;
+        } elseif ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT_OPEN_TAG) {
             $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
             $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
-            return ($phpcsFile->numTokens + 1);
+            return $phpcsFile->numTokens;
         }
 
         if (isset($tokens[$commentStart]['comment_closer']) === false
@@ -74,22 +72,35 @@ class FileCommentSniff implements Sniff
             && $tokens[$commentStart]['comment_closer'] === ($phpcsFile->numTokens - 1))
         ) {
             // Don't process an unfinished file comment during live coding.
-            return ($phpcsFile->numTokens + 1);
+            return $phpcsFile->numTokens;
         }
 
         $commentEnd = $tokens[$commentStart]['comment_closer'];
 
-        $nextToken = $phpcsFile->findNext(
-            T_WHITESPACE,
-            ($commentEnd + 1),
-            null,
-            true
-        );
+        for ($nextToken = ($commentEnd + 1); $nextToken < $phpcsFile->numTokens; $nextToken++) {
+            if ($tokens[$nextToken]['code'] === T_WHITESPACE) {
+                continue;
+            }
+
+            if ($tokens[$nextToken]['code'] === T_ATTRIBUTE
+                && isset($tokens[$nextToken]['attribute_closer']) === true
+            ) {
+                $nextToken = $tokens[$nextToken]['attribute_closer'];
+                continue;
+            }
+
+            break;
+        }
+
+        if ($nextToken === $phpcsFile->numTokens) {
+            $nextToken--;
+        }
 
         $ignore = [
             T_CLASS,
             T_INTERFACE,
             T_TRAIT,
+            T_ENUM,
             T_FUNCTION,
             T_CLOSURE,
             T_PUBLIC,
@@ -98,50 +109,38 @@ class FileCommentSniff implements Sniff
             T_FINAL,
             T_STATIC,
             T_ABSTRACT,
+            T_READONLY,
             T_CONST,
-            T_PROPERTY,
             T_INCLUDE,
             T_INCLUDE_ONCE,
             T_REQUIRE,
             T_REQUIRE_ONCE,
         ];
 
-        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+        if (in_array($tokens[$nextToken]['code'], $ignore, true) === true) {
             $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
             $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
-            return ($phpcsFile->numTokens + 1);
+            return $phpcsFile->numTokens;
         }
 
         $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
 
-        // Exactly one blank line between the open tag and the file comment.
-        if ($tokens[$commentStart]['line'] !== ($tokens[$stackPtr]['line'] + 2)) {
-            $error = 'There must be exactly one blank line before the file comment';
-            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
-        }
-
         // Exactly one blank line after the file comment.
         $next = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), null, true);
-        if ($tokens[$next]['line'] !== ($tokens[$commentEnd]['line'] + 2)) {
+        if ($next !== false && $tokens[$next]['line'] !== ($tokens[$commentEnd]['line'] + 2)) {
             $error = 'There must be exactly one blank line after the file comment';
             $phpcsFile->addError($error, $commentEnd, 'SpacingAfterComment');
         }
 
-        // Required tags in correct order.
-        $required = [
-            '@package'   => true,
-            '@copyright' => true,
-        ];
-
         $foundTags = [];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $name       = $tokens[$tag]['content'];
-            $isRequired = isset($required[$name]);
+            $isRequired = isset(self::REQUIRED_TAGS[$name]);
 
-            if ($isRequired === true && in_array($name, $foundTags) === true) {
+            if ($isRequired === true && in_array($name, $foundTags, true) === true) {
                 $error = 'Only one %s tag is allowed in a file comment';
                 $data  = [$name];
-                $phpcsFile->addError($error, $tag, 'Duplicate'.ucfirst(substr($name, 1)).'Tag', $data);
+                $phpcsFile->addError($error, $tag, 'Duplicate' . ucfirst(substr($name, 1)) . 'Tag', $data);
             }
 
             $foundTags[] = $name;
@@ -154,18 +153,18 @@ class FileCommentSniff implements Sniff
             if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
                 $error = 'Content missing for %s tag in file comment';
                 $data  = [$name];
-                $phpcsFile->addError($error, $tag, 'Empty'.ucfirst(substr($name, 1)).'Tag', $data);
+                $phpcsFile->addError($error, $tag, 'Empty' . ucfirst(substr($name, 1)) . 'Tag', $data);
                 continue;
             }
-        }//end foreach
+        }
 
         // Check if the tags are in the correct position.
         $pos = 0;
-        foreach ($required as $tag => $true) {
-            if (in_array($tag, $foundTags) === false) {
+        foreach (self::REQUIRED_TAGS as $tag => $true) {
+            if (in_array($tag, $foundTags, true) === false) {
                 $error = 'Missing %s tag in file comment';
                 $data  = [$tag];
-                $phpcsFile->addError($error, $commentEnd, 'Missing'.ucfirst(substr($tag, 1)).'Tag', $data);
+                $phpcsFile->addError($error, $commentEnd, 'Missing' . ucfirst(substr($tag, 1)) . 'Tag', $data);
             }
 
             if (isset($foundTags[$pos]) === false) {
@@ -178,16 +177,13 @@ class FileCommentSniff implements Sniff
                     ($pos + 1),
                     $tag,
                 ];
-                $phpcsFile->addError($error, $tokens[$commentStart]['comment_tags'][$pos], ucfirst(substr($tag, 1)).'TagOrder', $data);
+                $phpcsFile->addError($error, $tokens[$commentStart]['comment_tags'][$pos], ucfirst(substr($tag, 1)) . 'TagOrder', $data);
             }
 
             $pos++;
-        }//end foreach
+        }
 
         // Ignore the rest of the file.
-        return ($phpcsFile->numTokens + 1);
-
-    }//end process()
-
-
-}//end class
+        return $phpcsFile->numTokens;
+    }
+}

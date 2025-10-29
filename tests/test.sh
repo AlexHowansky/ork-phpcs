@@ -6,7 +6,7 @@ do
     SNIFF=$(basename ${FILE%/*})
     EXPECT=${FILE/.php/.expect}
     ACTUAL="./actual"
-    ../vendor/bin/phpcs -s -q --no-colors --standard=../Ork/ruleset.xml --sniffs=${SNIFF} ${FILE} | tail -n +3 | head -n -3 > ${ACTUAL}
+    ../vendor/bin/phpcs -s -q --no-colors --standard=../Ork/ruleset.xml --sniffs=${SNIFF} ${FILE} | tail -n +3 | head -n -1 > ${ACTUAL}
     if [ -s ${EXPECT} ]
     then
         if  cmp -s ${EXPECT} ${ACTUAL}
