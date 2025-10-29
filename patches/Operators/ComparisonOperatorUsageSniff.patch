@@ -1,0 +1,30 @@
+--- ComparisonOperatorUsageSniff.php.orig	2025-10-29 18:46:17.948228620 -0400
++++ ComparisonOperatorUsageSniff.php	2025-10-29 18:44:18.125991397 -0400
+@@ -2,13 +2,17 @@
+ /**
+  * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.
+  *
++ * Based on Squiz.Operators.ComparisonOperatorUsage, with the following changes:
++ *   - Allows use of the ternary shortcut operator: $a = $b ?: $c;
++ *
++ * @author    Alex Howansky <alex.howansky@gmail.com>
+  * @author    Greg Sherwood <gsherwood@squiz.net>
+  * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+  * @copyright 2023 PHPCSStandards and contributors
+  * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
+  */
+ 
+-namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Operators;
++namespace PHP_CodeSniffer\Standards\Ork\Sniffs\Operators;
+ 
+ use PHP_CodeSniffer\Files\File;
+ use PHP_CodeSniffer\Sniffs\Sniff;
+@@ -203,7 +207,7 @@
+ 
+         $requiredOps++;
+ 
+-        if ($foundOps < $requiredOps && $requiredOps !== $foundBooleans) {
++        if ($foundOps < $requiredOps && $requiredOps !== $foundBooleans && $tokens[($stackPtr + 1)]['code'] !== T_INLINE_ELSE) {
+             $error = 'Implicit true comparisons prohibited; use === TRUE instead';
+             $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
+         }

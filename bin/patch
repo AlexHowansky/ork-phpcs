@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Some of our custom sniffs are modifications of PHPCS sniffs, but if those
 # sniffs change, we want the changes. So, we'll save the original patches we
@@ -12,4 +12,9 @@ PATCH_DIR=${SCRIPT_DIR}/../patches
 SNIFF_DIR=${SCRIPT_DIR}/../Ork/Sniffs
 STANDARDS_DIR=${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards
 
-patch -o "${SNIFF_DIR}/Commenting/FileCommentSniff.php" "${STANDARDS_DIR}/Squiz/Sniffs/Commenting/FileCommentSniff.php" "${PATCH_DIR}/Commenting/FileCommentSniff.php"
+cd ${PATCH_DIR}
+for PATCH in */*.patch
+do
+    PATCH=${PATCH%*.patch}
+    patch -o "${SNIFF_DIR}/${PATCH}.php" "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.php"
+done
