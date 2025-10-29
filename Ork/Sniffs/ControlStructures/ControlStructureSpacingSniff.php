@@ -19,7 +19,6 @@ use PHP_CodeSniffer\Files\File;
 class ControlStructureSpacingSniff implements Sniff
 {
 
-
     /**
      * How many spaces should follow the opening bracket.
      *
