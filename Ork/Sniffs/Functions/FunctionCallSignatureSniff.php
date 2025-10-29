@@ -8,28 +8,19 @@
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2023 PHPCSStandards and contributors
+ * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\Functions;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCallSignatureSniff implements Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
 
     /**
      * The number of spaces code should be indented.
@@ -63,19 +54,19 @@ class FunctionCallSignatureSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return array<int|string>
      */
     public function register()
     {
-        $tokens = Tokens::$functionNameTokens;
+        $tokens = Tokens::FUNCTION_NAME_TOKENS;
 
         $tokens[] = T_VARIABLE;
         $tokens[] = T_CLOSE_CURLY_BRACKET;
+        $tokens[] = T_CLOSE_SQUARE_BRACKET;
         $tokens[] = T_CLOSE_PARENTHESIS;
 
         return $tokens;
-
-    }//end register()
+    }
 
 
     /**
@@ -87,7 +78,7 @@ class FunctionCallSignatureSniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, int $stackPtr)
     {
         $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
@@ -101,7 +92,7 @@ class FunctionCallSignatureSniff implements Sniff
         }
 
         // Find the next non-empty token.
-        $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        $openBracket = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($stackPtr + 1), null, true);
 
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             // Not a function call.
@@ -114,7 +105,7 @@ class FunctionCallSignatureSniff implements Sniff
         }
 
         // Find the previous non-empty token.
-        $search   = Tokens::$emptyTokens;
+        $search   = Tokens::EMPTY_TOKENS;
         $search[] = T_BITWISE_AND;
         $previous = $phpcsFile->findPrevious($search, ($stackPtr - 1), null, true);
         if ($tokens[$previous]['code'] === T_FUNCTION) {
@@ -124,7 +115,9 @@ class FunctionCallSignatureSniff implements Sniff
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
-        if (($stackPtr + 1) !== $openBracket) {
+        if ($tokens[$stackPtr]['code'] !== T_ANON_CLASS
+            && ($stackPtr + 1) !== $openBracket
+        ) {
             // Checking this: $value = my_function[*](...).
             $error = 'Space before opening parenthesis of function call prohibited';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeOpenBracket');
@@ -143,7 +136,7 @@ class FunctionCallSignatureSniff implements Sniff
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($tokens[$next]['code'] === T_SEMICOLON) {
-            if (isset(Tokens::$emptyTokens[$tokens[($closeBracket + 1)]['code']]) === true) {
+            if (isset(Tokens::EMPTY_TOKENS[$tokens[($closeBracket + 1)]['code']]) === true) {
                 $error = 'Space after closing parenthesis of function call prohibited';
                 $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceAfterCloseBracket');
                 if ($fix === true) {
@@ -166,8 +159,7 @@ class FunctionCallSignatureSniff implements Sniff
         } else {
             $this->processSingleLineCall($phpcsFile, $stackPtr, $openBracket, $tokens);
         }
-
-    }//end process()
+    }
 
 
     /**
@@ -181,9 +173,9 @@ class FunctionCallSignatureSniff implements Sniff
      * @param array                       $tokens      The stack of tokens that make up
      *                                                 the file.
      *
-     * @return void
+     * @return bool
      */
-    public function isMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function isMultiLineCall(File $phpcsFile, int $stackPtr, int $openBracket, array $tokens)
     {
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
@@ -191,8 +183,7 @@ class FunctionCallSignatureSniff implements Sniff
         }
 
         return false;
-
-    }//end isMultiLineCall()
+    }
 
 
     /**
@@ -208,14 +199,14 @@ class FunctionCallSignatureSniff implements Sniff
      *
      * @return void
      */
-    public function processSingleLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function processSingleLineCall(File $phpcsFile, int $stackPtr, int $openBracket, array $tokens)
     {
-        // If the function call has no arguments or comments, enforce 0 spaces.
         $closer = $tokens[$openBracket]['parenthesis_closer'];
         if ($openBracket === ($closer - 1)) {
             return;
         }
 
+        // If the function call has no arguments or comments, enforce 0 spaces.
         $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), $closer, true);
         if ($next === false) {
             $requiredSpacesAfterOpen   = 0;
@@ -232,14 +223,14 @@ class FunctionCallSignatureSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($openBracket + 1), '');
             }
-        } else if ($requiredSpacesAfterOpen > 0) {
+        } elseif ($requiredSpacesAfterOpen > 0) {
             $spaceAfterOpen = 0;
             if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen($tokens[($openBracket + 1)]['content']);
+                $spaceAfterOpen = $tokens[($openBracket + 1)]['length'];
             }
 
             if ($spaceAfterOpen !== $requiredSpacesAfterOpen) {
-                $error = 'Expected %s spaces after opening bracket; %s found';
+                $error = 'Expected %s spaces after opening parenthesis; %s found';
                 $data  = [
                     $requiredSpacesAfterOpen,
                     $spaceAfterOpen,
@@ -254,7 +245,7 @@ class FunctionCallSignatureSniff implements Sniff
                     }
                 }
             }
-        }//end if
+        }
 
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
@@ -266,23 +257,23 @@ class FunctionCallSignatureSniff implements Sniff
 
         if ($tokens[$prev]['line'] !== $tokens[$closer]['line']) {
             $spaceBeforeClose = 'newline';
-        } else if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
-            $spaceBeforeClose = strlen($tokens[($closer - 1)]['content']);
+        } elseif ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
+            $spaceBeforeClose = $tokens[($closer - 1)]['length'];
         }
 
         if ($spaceBeforeClose !== $requiredSpacesBeforeClose) {
-            $error = 'Expected %s spaces before closing bracket; %s found';
+            $error = 'Expected %s spaces before closing parenthesis; %s found';
             $data  = [
                 $requiredSpacesBeforeClose,
                 $spaceBeforeClose,
             ];
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
+            $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceBeforeCloseBracket', $data);
             if ($fix === true) {
                 $padding = str_repeat(' ', $requiredSpacesBeforeClose);
 
                 if ($spaceBeforeClose === 0) {
                     $phpcsFile->fixer->addContentBefore($closer, $padding);
-                } else if ($spaceBeforeClose === 'newline') {
+                } elseif ($spaceBeforeClose === 'newline') {
                     $phpcsFile->fixer->beginChangeset();
 
                     $closingContent = ')';
@@ -298,7 +289,7 @@ class FunctionCallSignatureSniff implements Sniff
                     // We want to jump over any whitespace or inline comment and
                     // move the closing parenthesis after any other token.
                     $prev = ($closer - 1);
-                    while (isset(Tokens::$emptyTokens[$tokens[$prev]['code']]) === true) {
+                    while (isset(Tokens::EMPTY_TOKENS[$tokens[$prev]['code']]) === true) {
                         if (($tokens[$prev]['code'] === T_COMMENT)
                             && (strpos($tokens[$prev]['content'], '*/') !== false)
                         ) {
@@ -308,7 +299,7 @@ class FunctionCallSignatureSniff implements Sniff
                         $prev--;
                     }
 
-                    $phpcsFile->fixer->addContent($prev, $padding.$closingContent);
+                    $phpcsFile->fixer->addContent($prev, $padding . $closingContent);
 
                     $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), null, true);
                     for ($i = ($prevNonWhitespace + 1); $i <= $closer; $i++) {
@@ -318,11 +309,10 @@ class FunctionCallSignatureSniff implements Sniff
                     $phpcsFile->fixer->endChangeset();
                 } else {
                     $phpcsFile->fixer->replaceToken(($closer - 1), $padding);
-                }//end if
-            }//end if
-        }//end if
-
-    }//end processSingleLineCall()
+                }
+            }
+        }
+    }
 
 
     /**
@@ -338,24 +328,31 @@ class FunctionCallSignatureSniff implements Sniff
      *
      * @return void
      */
-    public function processMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function processMultiLineCall(File $phpcsFile, int $stackPtr, int $openBracket, array $tokens)
     {
         // We need to work out how far indented the function
         // call itself is, so we can work out how far to
         // indent the arguments.
         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
-        if ($tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+        if ($first !== false
+            && $tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
             && $tokens[($first - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING
         ) {
             // We are in a multi-line string, so find the start and use
             // the indent from there.
             $prev  = $phpcsFile->findPrevious(T_CONSTANT_ENCAPSED_STRING, ($first - 2), null, true);
-            $first = $phpcsFile->findFirstOnLine(Tokens::$emptyTokens, $prev, true);
+            $first = $phpcsFile->findFirstOnLine(Tokens::EMPTY_TOKENS, $prev, true);
+            if ($first === false) {
+                $first = ($prev + 1);
+            }
         }
 
         $foundFunctionIndent = 0;
         if ($first !== false) {
-            if ($tokens[$first]['code'] === T_INLINE_HTML) {
+            if ($tokens[$first]['code'] === T_INLINE_HTML
+                || ($tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+                && $tokens[($first - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING)
+            ) {
                 $trimmed = ltrim($tokens[$first]['content']);
                 if ($trimmed === '') {
                     $foundFunctionIndent = strlen($tokens[$first]['content']);
@@ -384,43 +381,50 @@ class FunctionCallSignatureSniff implements Sniff
 
             $fix = $phpcsFile->addFixableError($error, $first, 'OpeningIndent', $data);
             if ($fix === true) {
+                // Set adjustment for use later to determine whether argument indentation is correct when fixing.
                 $adjustment = ($functionIndent - $foundFunctionIndent);
-                $padding    = str_repeat(' ', $functionIndent);
+
+                $padding = str_repeat(' ', $functionIndent);
                 if ($foundFunctionIndent === 0) {
                     $phpcsFile->fixer->addContentBefore($first, $padding);
+                } elseif ($tokens[$first]['code'] === T_INLINE_HTML) {
+                    $newContent = $padding . ltrim($tokens[$first]['content']);
+                    $phpcsFile->fixer->replaceToken($first, $newContent);
                 } else {
                     $phpcsFile->fixer->replaceToken(($first - 1), $padding);
                 }
             }
         }
 
-        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
-        if ($tokens[$next]['line'] === $tokens[$openBracket]['line']
-            && $tokens[$next]['code'] !== T_ARRAY
-            && $tokens[$next]['code'] !== T_OPEN_SHORT_ARRAY
+        $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($openBracket + 1), null, true);
+        if (
+            $tokens[$next]['line'] === $tokens[$openBracket]['line'] &&
+            $tokens[$next]['code'] !== T_ARRAY &&
+            $tokens[$next]['code'] !== T_OPEN_SHORT_ARRAY
         ) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
             if ($fix === true) {
                 $phpcsFile->fixer->addContent(
                     $openBracket,
-                    $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
+                    $phpcsFile->eolChar . str_repeat(' ', ($foundFunctionIndent + $this->indent))
                 );
             }
         }
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $prev         = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']
-            && $tokens[$prev]['code'] !== T_ARRAY
-            && $tokens[$prev]['code'] !== T_CLOSE_SHORT_ARRAY
+        if (
+            $tokens[$prev]['line'] === $tokens[$closeBracket]['line'] &&
+            $tokens[$prev]['code'] !== T_ARRAY &&
+            $tokens[$prev]['code'] !== T_CLOSE_SHORT_ARRAY
         ) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');
             if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore(
                     $closeBracket,
-                    $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
+                    $phpcsFile->eolChar . str_repeat(' ', ($foundFunctionIndent + $this->indent))
                 );
             }
         }
@@ -432,6 +436,30 @@ class FunctionCallSignatureSniff implements Sniff
 
         // Start processing at the first argument.
         $i = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
+
+        if ($tokens[$i]['line'] > ($tokens[$openBracket]['line'] + 1)) {
+            $error = 'The first argument in a multi-line function call must be on the line after the opening parenthesis';
+            $fix   = $phpcsFile->addFixableError($error, $i, 'FirstArgumentPosition');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($x = ($openBracket + 1); $x < $i; $x++) {
+                    if ($tokens[$x]['line'] === $tokens[$openBracket]['line']) {
+                        continue;
+                    }
+
+                    if ($tokens[$x]['line'] === $tokens[$i]['line']) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($x, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+        }
+
+        $i = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($openBracket + 1), null, true);
+
         if ($tokens[($i - 1)]['code'] === T_WHITESPACE
             && $tokens[($i - 1)]['line'] === $tokens[$i]['line']
         ) {
@@ -450,12 +478,12 @@ class FunctionCallSignatureSniff implements Sniff
                 $lastLine = $tokens[$i]['line'];
 
                 // Ignore heredoc indentation.
-                if (isset(Tokens::$heredocTokens[$tokens[$i]['code']]) === true) {
+                if (isset(Tokens::HEREDOC_TOKENS[$tokens[$i]['code']]) === true) {
                     continue;
                 }
 
                 // Ignore multi-line string indentation.
-                if (isset(Tokens::$stringTokens[$tokens[$i]['code']]) === true
+                if (isset(Tokens::STRING_TOKENS[$tokens[$i]['code']]) === true
                     && $tokens[$i]['code'] === $tokens[($i - 1)]['code']
                 ) {
                     continue;
@@ -516,7 +544,7 @@ class FunctionCallSignatureSniff implements Sniff
                             $foundIndent = 0;
                         }
                     } else {
-                        $foundIndent = strlen($tokens[$i]['content']);
+                        $foundIndent = $tokens[$i]['length'];
                     }
 
                     if ($foundIndent < $expectedIndent
@@ -531,33 +559,44 @@ class FunctionCallSignatureSniff implements Sniff
 
                         $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
                         if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+
                             $padding = str_repeat(' ', $expectedIndent);
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($i, $padding);
+                                if (isset($tokens[$i]['scope_opener']) === true) {
+                                    $phpcsFile->fixer->changeCodeBlockIndent($i, $tokens[$i]['scope_closer'], $expectedIndent);
+                                }
                             } else {
                                 if ($tokens[$i]['code'] === T_COMMENT) {
-                                    $comment = $padding.ltrim($tokens[$i]['content']);
+                                    $comment = $padding . ltrim($tokens[$i]['content']);
                                     $phpcsFile->fixer->replaceToken($i, $comment);
                                 } else {
                                     $phpcsFile->fixer->replaceToken($i, $padding);
                                 }
+
+                                if (isset($tokens[($i + 1)]['scope_opener']) === true) {
+                                    $phpcsFile->fixer->changeCodeBlockIndent(($i + 1), $tokens[($i + 1)]['scope_closer'], ($expectedIndent - $foundIndent));
+                                }
                             }
+
+                            $phpcsFile->fixer->endChangeset();
                         }
-                    }//end if
+                    }
                 } else {
                     $nextCode = $i;
-                }//end if
+                }
 
                 if ($inArg === false) {
                     $argStart = $nextCode;
-                    $argEnd   = $phpcsFile->findEndOfStatement($nextCode);
+                    $argEnd   = $phpcsFile->findEndOfStatement($nextCode, [T_COLON]);
                 }
-            }//end if
+            }
 
             // If we are within an argument we should be ignoring commas
-            // as these are not signaling the end of an argument.
+            // as these are not signalling the end of an argument.
             if ($inArg === false && $tokens[$i]['code'] === T_COMMA) {
-                $next = $phpcsFile->findNext([T_WHITESPACE, T_COMMENT], ($i + 1), $closeBracket, true);
+                $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($i + 1), $closeBracket, true);
                 if ($next === false) {
                     continue;
                 }
@@ -579,19 +618,16 @@ class FunctionCallSignatureSniff implements Sniff
 
                             $phpcsFile->fixer->addContentBefore(
                                 $next,
-                                $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
+                                $phpcsFile->eolChar . str_repeat(' ', ($foundFunctionIndent + $this->indent))
                             );
                             $phpcsFile->fixer->endChangeset();
                         }
                     }
-                }//end if
+                }
 
                 $argStart = $next;
-                $argEnd   = $phpcsFile->findEndOfStatement($next);
-            }//end if
-        }//end for
-
-    }//end processMultiLineCall()
-
-
-}//end class
+                $argEnd   = $phpcsFile->findEndOfStatement($next, [T_COLON]);
+            }
+        }
+    }
+}
