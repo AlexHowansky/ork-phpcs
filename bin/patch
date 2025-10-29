@@ -16,5 +16,5 @@ cd ${PATCH_DIR}
 for PATCH in */*.patch
 do
     PATCH=${PATCH%*.patch}
-    patch -o "${SNIFF_DIR}/${PATCH}.php" "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.php"
+    patch -o "${SNIFF_DIR}/${PATCH}.php" "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
 done
