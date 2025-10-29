@@ -36,10 +36,6 @@
     <rule ref="Generic.Commenting.Todo"/>
     <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
-    <!-- <rule ref="Generic.Debug.ClosureLinter"/> -->
-    <!-- <rule ref="Generic.Debug.CSSLint"/> -->
-    <!-- <rule ref="Generic.Debug.ESLint"/> -->
-    <!-- <rule ref="Generic.Debug.JSHint"/> -->
     <rule ref="Generic.Files.ByteOrderMark"/>
     <!-- <rule ref="Generic.Files.EndFileNewline"/> -->
     <!-- <rule ref="Generic.Files.EndFileNoNewline"/> -->
@@ -63,11 +59,9 @@
     <rule ref="Generic.Files.OneTraitPerFile"/>
     <!-- <rule ref="Generic.Formatting.DisallowMultipleStatements"/> -->
     <!-- <rule ref="Generic.Formatting.MultipleStatementAlignment"/> -->
-    <!-- <rule ref="Generic.Formatting.NoSpaceAfterCast"/> -->
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <!-- <rule ref="Generic.Formatting.SpaceBeforeCast"/> -->
     <!-- <rule ref="Generic.Formatting.SpaceAfterNot"/> -->
-    <!-- <rule ref="Generic.Functions.CallTimePassByReference"/> -->
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
     <!-- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/> -->
     <!-- <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/> -->
@@ -122,24 +116,6 @@
     <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
     <rule ref="Generic.WhiteSpace.SpreadOperatorSpacingAfter"/>
-
-    <!-- MySource -->
-    <!-- <rule ref="MySource.CSS.BrowserSpecificStyles"/> -->
-    <!-- <rule ref="MySource.Channels.DisallowSelfActions"/> -->
-    <!-- <rule ref="MySource.Channels.IncludeOwnSystem"/> -->
-    <!-- <rule ref="MySource.Channels.IncludeSystem"/> -->
-    <!-- <rule ref="MySource.Channels.UnusedSystem"/> -->
-    <!-- <rule ref="MySource.Commenting.FunctionComment"/> -->
-    <!-- <rule ref="MySource.Debug.DebugCode"/> -->
-    <!-- <rule ref="MySource.Debug.FirebugConsole"/> -->
-    <!-- <rule ref="MySource.Objects.AssignThis"/> -->
-    <!-- <rule ref="MySource.Objects.CreateWidgetTypeCallback"/> -->
-    <!-- <rule ref="MySource.Objects.DisallowNewWidget"/> -->
-    <!-- <rule ref="MySource.PHP.AjaxNullComparison"/> -->
-    <!-- <rule ref="MySource.PHP.EvalObjectFactory"/> -->
-    <!-- <rule ref="MySource.PHP.GetRequestData"/> -->
-    <!-- <rule ref="MySource.PHP.ReturnFunctionValue"/> -->
-    <!-- <rule ref="MySource.Strings.JoinStrings"/> -->
 
     <!-- PEAR -->
     <rule ref="PEAR.Classes.ClassDeclaration">
@@ -206,7 +182,6 @@
     <!-- <rule ref="PSR12.Traits.UseDeclaration"/> -->
 
     <!-- Zend -->
-    <!-- <rule ref="Zend.Debug.CodeAnalyzer"/> -->
     <rule ref="Zend.Files.ClosingTag"/>
     <!-- <rule ref="Zend.NamingConventions.ValidVariableName"/> -->
 
@@ -221,7 +196,6 @@
     </rule>
     <rule ref="Squiz.Classes.ClassDeclaration"/>
     <rule ref="Squiz.Classes.ClassFileName"/>
-    <!-- <rule ref="Squiz.Classes.DuplicateProperty"/> -->
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
     <rule ref="Squiz.Classes.SelfMemberReference"/>
     <rule ref="Squiz.Classes.ValidClassName"/>
@@ -267,26 +241,6 @@
     <rule ref="Squiz.ControlStructures.SwitchDeclaration">
         <exclude name="Squiz.ControlStructures.SwitchDeclaration.BreakIndent"/>
     </rule>
-    <!-- <rule ref="Squiz.CSS.ClassDefinitionClosingBraceSpace"/> -->
-    <!-- <rule ref="Squiz.CSS.ClassDefinitionNameSpacing"/> -->
-    <!-- <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace"/> -->
-    <!-- <rule ref="Squiz.CSS.ColonSpacing"/> -->
-    <!-- <rule ref="Squiz.CSS.ColourDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.DisallowMultipleStyleDefinitions"/> -->
-    <!-- <rule ref="Squiz.CSS.DuplicateClassDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.DuplicateStyleDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.EmptyClassDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.EmptyStyleDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.ForbiddenStyles"/> -->
-    <!-- <rule ref="Squiz.CSS.Indentation"/> -->
-    <!-- <rule ref="Squiz.CSS.LowercaseStyleDefinition"/> -->
-    <!-- <rule ref="Squiz.CSS.MissingColon"/> -->
-    <!-- <rule ref="Squiz.CSS.NamedColours"/> -->
-    <!-- <rule ref="Squiz.CSS.Opacity"/> -->
-    <!-- <rule ref="Squiz.CSS.SemicolonSpacing"/> -->
-    <!-- <rule ref="Squiz.CSS.ShorthandSize"/> -->
-    <!-- <rule ref="Squiz.Debug.JavaScriptLint"/> -->
-    <!-- <rule ref="Squiz.Debug.JSLint"/> -->
     <!-- <rule ref="Squiz.Files.FileExtension"/> -->
     <!-- <rule ref="Squiz.Formatting.OperatorBracket"/> -->
     <!-- <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/> -->
@@ -301,11 +255,9 @@
     <rule ref="Squiz.NamingConventions.ValidVariableName">
         <exclude name="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
     </rule>
-    <!-- <rule ref="Squiz.Objects.DisallowObjectStringIndex"/> -->
     <rule ref="Squiz.Objects.ObjectInstantiation">
         <exclude name="Squiz.Objects.ObjectInstantiation.NotAssigned"/>
     </rule>
-    <!-- <rule ref="Squiz.Objects.ObjectMemberComma"/> -->
     <!-- <rule ref="Squiz.Operators.ComparisonOperatorUsage"/> -->
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
@@ -345,7 +297,6 @@
             <property name="spacing" value="1"/>
         </properties>
     </rule>
-    <!-- <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/> -->
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
@@ -356,7 +307,6 @@
             <property name="ignoreNewlines" value="true"/>
         </properties>
     </rule>
-    <!-- <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing"/> -->
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
