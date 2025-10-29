@@ -1,0 +1,52 @@
+--- DisallowComparisonAssignmentSniff.php.orig	2025-10-29 19:56:46.470210890 -0400
++++ DisallowComparisonAssignmentSniff.php	2025-10-29 19:55:39.961008133 -0400
+@@ -2,13 +2,23 @@
+ /**
+  * Ensures that the value of a comparison is not assigned to a variable.
+  *
++ * Based on Squiz.PHP.DisallowComparisonAssignment, with the following changes:
++ *   - Allows ternary assignments:
++ *       $a = $b ? 0 : 1;
++ *       $a = $b === true ? 0 : 1;
++ *   - Allows comparison assignments when cast to a boolean:
++ *       $a = $b === true; // disallowed
++ *       $a = (bool) $b === true; // allowed
++ *
++ * @author    Alex Howansky <alex.howansky@gmail.com>
++ * @see       https://github.com/squizlabs/PHP_CodeSniffer/issues/616
+  * @author    Greg Sherwood <gsherwood@squiz.net>
+  * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+  * @copyright 2023 PHPCSStandards and contributors
+  * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
+  */
+ 
+-namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
++namespace PHP_CodeSniffer\Standards\Ork\Sniffs\PHP;
+ 
+ use PHP_CodeSniffer\Files\File;
+ use PHP_CodeSniffer\Sniffs\Sniff;
+@@ -84,15 +94,21 @@
+             return;
+         }
+ 
++        if ($phpcsFile->findNext(T_BOOL_CAST, ($stackPtr + 1), null, false, null, true) !== false) {
++            return;
++        }
++
+         $endStatement = $phpcsFile->findEndOfStatement($stackPtr);
+         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
+             if ((isset(Tokens::COMPARISON_TOKENS[$tokens[$i]['code']]) === true
+                 && $tokens[$i]['code'] !== T_COALESCE)
+                 || $tokens[$i]['code'] === T_INLINE_THEN
+             ) {
+-                $error = 'The value of a comparison must not be assigned to a variable';
+-                $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
+-                break;
++                if ($phpcsFile->findNext([T_INLINE_THEN, T_COALESCE], ($stackPtr + 1), null, false, null, true) === false) {
++                    $error = 'The value of a comparison must not be assigned to a variable';
++                    $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
++                    break;
++                }
+             }
+ 
+             if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$i]['code']]) === true
