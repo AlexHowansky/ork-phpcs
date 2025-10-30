@@ -12,9 +12,14 @@ PATCH_DIR=${SCRIPT_DIR}/../patches
 SNIFF_DIR=${SCRIPT_DIR}/../Ork/Sniffs
 STANDARDS_DIR=${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards
 
-cd ${PATCH_DIR}
-for PATCH in */*.patch
-do
-    PATCH=${PATCH%*.patch}
-    patch -o "${SNIFF_DIR}/${PATCH}.php" "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
-done
+PATCH="Functions/FunctionCallSignatureSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/PEAR/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
+
+PATCH="Commenting/FileCommentSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
+
+PATCH="Operators/ComparisonOperatorUsageSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
+
+PATCH="PHP/DisallowComparisonAssignmentSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
