@@ -12,6 +12,9 @@ PATCH_DIR=${SCRIPT_DIR}/../patches
 SNIFF_DIR=${SCRIPT_DIR}/../Ork/Sniffs
 STANDARDS_DIR=${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards
 
+PATCH="ControlStructures/MultiLineConditionSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/PEAR/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
+
 PATCH="Functions/FunctionCallSignatureSniff"
 patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/PEAR/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
 
@@ -22,7 +25,4 @@ PATCH="Operators/ComparisonOperatorUsageSniff"
 patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
 
 PATCH="PHP/DisallowComparisonAssignmentSniff"
-patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
-
-PATCH="ControlStructures/MultiLineConditionSniff"
 patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
