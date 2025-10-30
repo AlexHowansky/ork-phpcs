@@ -1,0 +1,99 @@
+--- MultiLineConditionSniff.php.orig	2025-10-29 21:04:33.306927823 -0400
++++ MultiLineConditionSniff.php	2025-10-29 21:02:12.038331096 -0400
+@@ -2,13 +2,18 @@
+ /**
+  * Ensure multi-line IF conditions are defined correctly.
+  *
++ * Based on PEAR.ControlStructures.MultiLineCondition, with the following changes:
++ *   - Require a new line for the first condition
++ *   - Expect boolean operators at the end of the line
++ *
++ * @author    Alex Howansky <alex.howansky@gmail.com>
+  * @author    Greg Sherwood <gsherwood@squiz.net>
+  * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+  * @copyright 2023 PHPCSStandards and contributors
+  * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
+  */
+ 
+-namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\ControlStructures;
++namespace PHP_CodeSniffer\Standards\Ork\Sniffs\ControlStructures;
+ 
+ use PHP_CodeSniffer\Files\File;
+ use PHP_CodeSniffer\Sniffs\Sniff;
+@@ -58,6 +63,8 @@
+ 
+         $openBracket    = $tokens[$stackPtr]['parenthesis_opener'];
+         $closeBracket   = $tokens[$stackPtr]['parenthesis_closer'];
++        $openLine       = $tokens[$openBracket]['line'];
++        $closeLine      = $tokens[$closeBracket]['line'];
+         $spaceAfterOpen = 0;
+         if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
+             if (strpos($tokens[($openBracket + 1)]['content'], $phpcsFile->eolChar) !== false) {
+@@ -67,15 +74,11 @@
+             }
+         }
+ 
+-        if ($spaceAfterOpen !== 0) {
+-            $error = 'First condition of a multi-line IF statement must directly follow the opening parenthesis';
++        if ($spaceAfterOpen !== 'newline' && $openLine !== $closeLine) {
++            $error = 'First condition of a multi-line IF statement must be on a new line';
+             $fix   = $phpcsFile->addFixableError($error, ($openBracket + 1), 'SpacingAfterOpenBrace');
+             if ($fix === true) {
+-                if ($spaceAfterOpen === 'newline') {
+-                    $phpcsFile->fixer->replaceToken(($openBracket + 1), '');
+-                } else {
+-                    $phpcsFile->fixer->replaceToken(($openBracket + 1), '');
+-                }
++                $phpcsFile->fixer->replaceToken($openBracket, '('.$phpcsFile->eolChar);
+             }
+         }
+ 
+@@ -94,8 +97,8 @@
+         }
+ 
+         // Each line between the parenthesis should be indented 4 spaces
+-        // and start with an operator, unless the line is inside a
+-        // function call, in which case it is ignored.
++        // and end with an operator, unless the line is the last one or
++        // is inside a function call, in which case it is ignored.
+         $prevLine = $tokens[$openBracket]['line'];
+         for ($i = ($openBracket + 1); $i <= $closeBracket; $i++) {
+             if ($i === $closeBracket && $tokens[$openBracket]['line'] !== $tokens[$i]['line']) {
+@@ -170,34 +173,9 @@
+ 
+                 $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, $i, null, true);
+                 if ($next !== $closeBracket && $tokens[$next]['line'] === $tokens[$i]['line']) {
+-                    if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$next]['code']]) === false) {
+-                        $prev    = $phpcsFile->findPrevious(Tokens::EMPTY_TOKENS, ($i - 1), $openBracket, true);
+-                        $fixable = true;
+-                        if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$prev]['code']]) === false
+-                            && $phpcsFile->findNext(T_WHITESPACE, ($prev + 1), $next, true) !== false
+-                        ) {
+-                            // Condition spread over multi-lines interspersed with comments.
+-                            $fixable = false;
+-                        }
+-
+-                        $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
+-                        if ($fixable === false) {
+-                            $phpcsFile->addError($error, $next, 'StartWithBoolean');
+-                        } else {
+-                            $fix = $phpcsFile->addFixableError($error, $next, 'StartWithBoolean');
+-                            if ($fix === true) {
+-                                if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$prev]['code']]) === true) {
+-                                    $phpcsFile->fixer->beginChangeset();
+-                                    $phpcsFile->fixer->replaceToken($prev, '');
+-                                    $phpcsFile->fixer->addContentBefore($next, $tokens[$prev]['content'] . ' ');
+-                                    $phpcsFile->fixer->endChangeset();
+-                                } else {
+-                                    for ($x = ($prev + 1); $x < $next; $x++) {
+-                                        $phpcsFile->fixer->replaceToken($x, '');
+-                                    }
+-                                }
+-                            }
+-                        }
++                    if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$next]['code']]) === true) {
++                        $error = 'Each line in a multi-line IF statement must not begin with a boolean operator';
++                        $phpcsFile->addError($error, $next, 'StartWithBoolean');
+                     }
+                 }
+ 

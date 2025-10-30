@@ -23,3 +23,6 @@ patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" 
 
 PATCH="PHP/DisallowComparisonAssignmentSniff"
 patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"
+
+PATCH="ControlStructures/MultiLineConditionSniff"
+patch -o ${SNIFF_DIR}/${PATCH}.php "${STANDARDS_DIR}/Squiz/Sniffs/${PATCH}.php" "${PATCH_DIR}/${PATCH}.patch"

@@ -1,0 +1,12 @@
+------------------------------------------------------------------------------------------------------------------------------------
+FOUND 3 ERRORS AFFECTING 3 LINES
+------------------------------------------------------------------------------------------------------------------------------------
+ 3 | ERROR | [x] First condition of a multi-line IF statement must be on a new line
+   |       |     (Ork.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace)
+ 4 | ERROR | [ ] Each line in a multi-line IF statement must not begin with a boolean operator
+   |       |     (Ork.ControlStructures.MultiLineCondition.StartWithBoolean)
+ 5 | ERROR | [ ] Each line in a multi-line IF statement must not begin with a boolean operator
+   |       |     (Ork.ControlStructures.MultiLineCondition.StartWithBoolean)
+------------------------------------------------------------------------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+------------------------------------------------------------------------------------------------------------------------------------

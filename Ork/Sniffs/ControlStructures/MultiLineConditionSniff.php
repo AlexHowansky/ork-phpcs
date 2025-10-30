@@ -8,28 +8,19 @@
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2023 PHPCSStandards and contributors
+ * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 class MultiLineConditionSniff implements Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
 
     /**
      * The number of spaces code should be indented.
@@ -42,7 +33,7 @@ class MultiLineConditionSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return array<int|string>
      */
     public function register()
     {
@@ -50,8 +41,7 @@ class MultiLineConditionSniff implements Sniff
             T_IF,
             T_ELSEIF,
         ];
-
-    }//end register()
+    }
 
 
     /**
@@ -63,7 +53,7 @@ class MultiLineConditionSniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, int $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -71,17 +61,16 @@ class MultiLineConditionSniff implements Sniff
             return;
         }
 
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
-        $openLine     = $tokens[$openBracket]['line'];
-        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
-        $closeLine    = $tokens[$closeBracket]['line'];
-
+        $openBracket    = $tokens[$stackPtr]['parenthesis_opener'];
+        $closeBracket   = $tokens[$stackPtr]['parenthesis_closer'];
+        $openLine       = $tokens[$openBracket]['line'];
+        $closeLine      = $tokens[$closeBracket]['line'];
         $spaceAfterOpen = 0;
         if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
             if (strpos($tokens[($openBracket + 1)]['content'], $phpcsFile->eolChar) !== false) {
                 $spaceAfterOpen = 'newline';
             } else {
-                $spaceAfterOpen = strlen($tokens[($openBracket + 1)]['content']);
+                $spaceAfterOpen = $tokens[($openBracket + 1)]['length'];
             }
         }
 
@@ -104,7 +93,7 @@ class MultiLineConditionSniff implements Sniff
         }
 
         if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
-            $statementIndent = strlen($tokens[$i]['content']);
+            $statementIndent = $tokens[$i]['length'];
         }
 
         // Each line between the parenthesis should be indented 4 spaces
@@ -122,11 +111,11 @@ class MultiLineConditionSniff implements Sniff
                         // Account for a comment at the end of the line.
                         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
                         if ($tokens[$next]['code'] !== T_COMMENT
-                            && isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === false
+                            && isset(Tokens::PHPCS_ANNOTATION_TOKENS[$tokens[$next]['code']]) === false
                         ) {
                             $phpcsFile->fixer->addNewlineBefore($closeBracket);
                         } else {
-                            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
+                            $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($next + 1), null, true);
                             $phpcsFile->fixer->beginChangeset();
                             $phpcsFile->fixer->replaceToken($closeBracket, '');
                             $phpcsFile->fixer->addContentBefore($next, ')');
@@ -134,7 +123,7 @@ class MultiLineConditionSniff implements Sniff
                         }
                     }
                 }
-            }//end if
+            }
 
             if ($tokens[$i]['line'] !== $prevLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
@@ -145,13 +134,13 @@ class MultiLineConditionSniff implements Sniff
                         // Closing brace needs to be indented to the same level
                         // as the statement.
                         $expectedIndent = $statementIndent;
-                    }//end if
+                    }
                 } else {
                     $expectedIndent = ($statementIndent + $this->indent);
-                }//end if
+                }
 
                 if ($tokens[$i]['code'] === T_COMMENT
-                    || isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true
+                    || isset(Tokens::PHPCS_ANNOTATION_TOKENS[$tokens[$i]['code']]) === true
                 ) {
                     $prevLine = $tokens[$i]['line'];
                     continue;
@@ -161,7 +150,7 @@ class MultiLineConditionSniff implements Sniff
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
                     $foundIndent = 0;
                 } else {
-                    $foundIndent = strlen($tokens[$i]['content']);
+                    $foundIndent = $tokens[$i]['length'];
                 }
 
                 if ($expectedIndent !== $foundIndent) {
@@ -182,18 +171,18 @@ class MultiLineConditionSniff implements Sniff
                     }
                 }
 
-                if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
-                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
-                    if (isset(Tokens::$booleanOperators[$tokens[$next]['code']]) === true) {
+                $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, $i, null, true);
+                if ($next !== $closeBracket && $tokens[$next]['line'] === $tokens[$i]['line']) {
+                    if (isset(Tokens::BOOLEAN_OPERATORS[$tokens[$next]['code']]) === true) {
                         $error = 'Each line in a multi-line IF statement must not begin with a boolean operator';
-                        $phpcsFile->addError($error, $i, 'StartWithBoolean');
+                        $phpcsFile->addError($error, $next, 'StartWithBoolean');
                     }
                 }
 
                 $prevLine = $tokens[$i]['line'];
-            }//end if
+            }
 
-            if ($tokens[$i]['code'] === T_STRING) {
+            if (isset(Tokens::NAME_TOKENS[$tokens[$i]['code']]) === true) {
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
                 if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
                     // This is a function call, so skip to the end as they
@@ -203,7 +192,7 @@ class MultiLineConditionSniff implements Sniff
                     continue;
                 }
             }
-        }//end for
+        }
 
         // From here on, we are checking the spacing of the opening and closing
         // braces. If this IF statement does not use braces, we end here.
@@ -221,12 +210,12 @@ class MultiLineConditionSniff implements Sniff
 
         if ($tokens[$openBrace]['line'] > $tokens[$closeBracket]['line']) {
             $length = -1;
-        } else if ($openBrace === ($closeBracket + 1)) {
+        } elseif ($openBrace === ($closeBracket + 1)) {
             $length = 0;
-        } else if ($openBrace === ($closeBracket + 2)
+        } elseif ($openBrace === ($closeBracket + 2)
             && $tokens[($closeBracket + 1)]['code'] === T_WHITESPACE
         ) {
-            $length = strlen($tokens[($closeBracket + 1)]['content']);
+            $length = $tokens[($closeBracket + 1)]['length'];
         } else {
             // Confused, so don't check.
             $length = 1;
@@ -255,8 +244,5 @@ class MultiLineConditionSniff implements Sniff
                 $phpcsFile->fixer->replaceToken(($closeBracket + 1), ' ');
             }
         }
-
-    }//end process()
-
-
-}//end class
+    }
+}
