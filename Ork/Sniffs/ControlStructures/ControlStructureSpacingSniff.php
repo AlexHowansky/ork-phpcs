@@ -7,14 +7,16 @@
  *
  * @author    Alex Howansky <alex.howansky@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2023 PHPCSStandards and contributors
+ * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Standards\Ork\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ControlStructureSpacingSniff implements Sniff
 {
@@ -37,7 +39,7 @@ class ControlStructureSpacingSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return array<int|string>
      */
     public function register()
     {
@@ -47,14 +49,11 @@ class ControlStructureSpacingSniff implements Sniff
             T_FOREACH,
             T_FOR,
             T_SWITCH,
-            T_DO,
-            T_ELSE,
             T_ELSEIF,
-            T_TRY,
             T_CATCH,
+            T_MATCH,
         ];
-
-    }//end register()
+    }
 
 
     /**
@@ -66,7 +65,7 @@ class ControlStructureSpacingSniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, int $stackPtr)
     {
         $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
@@ -78,37 +77,41 @@ class ControlStructureSpacingSniff implements Sniff
             return;
         }
 
-        $parenOpener    = $tokens[$stackPtr]['parenthesis_opener'];
-        $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
-        $spaceAfterOpen = 0;
-        if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-            if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
-                $spaceAfterOpen = 0;
-            } else {
-                $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
-            }
-        }
-
-        $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
-
-        if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
-            $error = 'Expected %s spaces after opening bracket; %s found';
-            $data  = [
-                $this->requiredSpacesAfterOpen,
-                $spaceAfterOpen,
-            ];
-            $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
-            if ($fix === true) {
-                $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
-                if ($spaceAfterOpen === 0) {
-                    $phpcsFile->fixer->addContent($parenOpener, $padding);
+        $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
+        $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($parenOpener + 1), null, true);
+        if (in_array($tokens[$nextContent]['code'], Tokens::COMMENT_TOKENS, true) === false) {
+            $spaceAfterOpen = 0;
+            if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
+                if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
+                    $spaceAfterOpen = 0;
                 } else {
-                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
+                    $spaceAfterOpen = $tokens[($parenOpener + 1)]['length'];
+                }
+            }
+
+            $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
+
+            if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = [
+                    $this->requiredSpacesAfterOpen,
+                    $spaceAfterOpen,
+                ];
+                $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                if ($fix === true) {
+                    $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
+                    if ($spaceAfterOpen === 0) {
+                        $phpcsFile->fixer->addContent($parenOpener, $padding);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
+                    }
                 }
             }
         }
 
-        if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']) {
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($parenCloser - 1), $parenOpener, true);
+        if ($tokens[$prev]['line'] === $tokens[$parenCloser]['line']) {
             $spaceBeforeClose = 0;
             if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
                 $spaceBeforeClose = strlen(ltrim($tokens[($parenCloser - 1)]['content'], $phpcsFile->eolChar));
@@ -132,9 +135,6 @@ class ControlStructureSpacingSniff implements Sniff
                     }
                 }
             }
-        }//end if
-
-    }//end process()
-
-
-}//end class
+        }
+    }
+}
