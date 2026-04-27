@@ -1,5 +1,5 @@
---- FileCommentSniff.php.orig	2025-10-29 17:29:55.143672634 -0400
-+++ FileCommentSniff.php	2025-10-29 17:27:49.330376111 -0400
+--- /home/alex/git/ork-phpcs/vendor/squizlabs/php_codesniffer/src/Standards/Squiz/Sniffs/Commenting/FileCommentSniff.php	2025-11-10 11:43:36.000000000 -0500
++++ /home/alex/git/ork-phpcs/Ork/Sniffs/Commenting/FileCommentSniff.php	2026-04-27 18:54:05.336173512 -0400
 @@ -2,13 +2,18 @@
  /**
   * Parses and verifies the file doc comment.
@@ -20,14 +20,18 @@
  
  use PHP_CodeSniffer\Files\File;
  use PHP_CodeSniffer\Sniffs\Sniff;
-@@ -23,8 +28,6 @@
+@@ -22,10 +27,8 @@
+      * @var array<string, true>
       */
      private const REQUIRED_TAGS = [
-         '@package'    => true,
+-        '@package'    => true,
 -        '@subpackage' => true,
 -        '@author'     => true,
-         '@copyright'  => true,
+-        '@copyright'  => true,
++        '@package'   => true,
++        '@copyright' => true,
      ];
+ 
  
 @@ -122,12 +125,6 @@
  

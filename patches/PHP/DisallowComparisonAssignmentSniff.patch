@@ -1,5 +1,5 @@
---- DisallowComparisonAssignmentSniff.php.orig	2025-10-29 19:56:46.470210890 -0400
-+++ DisallowComparisonAssignmentSniff.php	2025-10-29 19:55:39.961008133 -0400
+--- /home/alex/git/ork-phpcs/vendor/squizlabs/php_codesniffer/src/Standards/Squiz/Sniffs/PHP/DisallowComparisonAssignmentSniff.php	2025-11-10 11:43:36.000000000 -0500
++++ /home/alex/git/ork-phpcs/Ork/Sniffs/PHP/DisallowComparisonAssignmentSniff.php	2026-04-27 19:06:42.508873046 -0400
 @@ -2,13 +2,23 @@
  /**
   * Ensures that the value of a comparison is not assigned to a variable.
@@ -13,11 +13,11 @@
 + *       $a = (bool) $b === true; // allowed
 + *
 + * @author    Alex Howansky <alex.howansky@gmail.com>
-+ * @see       https://github.com/squizlabs/PHP_CodeSniffer/issues/616
   * @author    Greg Sherwood <gsherwood@squiz.net>
   * @copyright 2006-2023 Squiz Pty Ltd (ABN 77 084 670 600)
   * @copyright 2023 PHPCSStandards and contributors
   * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/HEAD/licence.txt BSD Licence
++ * @see       https://github.com/squizlabs/PHP_CodeSniffer/issues/616
   */
  
 -namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;

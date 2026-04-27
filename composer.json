@@ -21,6 +21,7 @@
     },
     "scripts": {
         "phpcs": "phpcs",
+        "post-update-cmd": "echo Run bin/applyPatches to determine if any PHPCS sniffs have changed.",
         "test": "cd tests && ./test.sh"
     },
     "config": {

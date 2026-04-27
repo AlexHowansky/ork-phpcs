@@ -1,5 +1,5 @@
---- MultiLineConditionSniff.php.orig	2025-10-29 21:04:33.306927823 -0400
-+++ MultiLineConditionSniff.php	2025-10-29 21:02:12.038331096 -0400
+--- /home/alex/git/ork-phpcs/vendor/squizlabs/php_codesniffer/src/Standards/PEAR/Sniffs/ControlStructures/MultiLineConditionSniff.php	2025-11-10 11:43:36.000000000 -0500
++++ /home/alex/git/ork-phpcs/Ork/Sniffs/ControlStructures/MultiLineConditionSniff.php	2026-04-27 18:59:08.961029578 -0400
 @@ -2,13 +2,18 @@
  /**
   * Ensure multi-line IF conditions are defined correctly.
@@ -44,7 +44,7 @@
 -                } else {
 -                    $phpcsFile->fixer->replaceToken(($openBracket + 1), '');
 -                }
-+                $phpcsFile->fixer->replaceToken($openBracket, '('.$phpcsFile->eolChar);
++                $phpcsFile->fixer->replaceToken($openBracket, '(' . $phpcsFile->eolChar);
              }
          }
  

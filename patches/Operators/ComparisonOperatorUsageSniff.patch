@@ -1,5 +1,5 @@
---- ComparisonOperatorUsageSniff.php.orig	2025-10-29 18:46:17.948228620 -0400
-+++ ComparisonOperatorUsageSniff.php	2025-10-29 18:44:18.125991397 -0400
+--- /home/alex/git/ork-phpcs/vendor/squizlabs/php_codesniffer/src/Standards/Squiz/Sniffs/Operators/ComparisonOperatorUsageSniff.php	2025-11-10 11:43:36.000000000 -0500
++++ /home/alex/git/ork-phpcs/Ork/Sniffs/Operators/ComparisonOperatorUsageSniff.php	2026-04-27 19:04:40.636430878 -0400
 @@ -2,13 +2,17 @@
  /**
   * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.

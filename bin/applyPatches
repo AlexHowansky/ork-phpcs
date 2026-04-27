@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+# This re-applies our custom patches to the native PHPCS sniffs. Run this
+# after running composer update.
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+VENDOR_DIR=$(realpath "${SCRIPT_DIR}/../vendor")
+PATCH_DIR=$(realpath "${SCRIPT_DIR}/../patches")
+SNIFF_DIR=$(realpath "${SCRIPT_DIR}/../Ork/Sniffs")
+STANDARDS_DIR=$(realpath "${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards")
+
+function apply() {
+    echo "Applying patch for ${1}/${2}"
+    patch -s -o "${SNIFF_DIR}/${2}.php" "${STANDARDS_DIR}/${1}/Sniffs/${2}.php" "${PATCH_DIR}/${2}.patch"
+}
+
+apply "Squiz" "Commenting/FileCommentSniff"
+apply "PSR2" "ControlStructures/ControlStructureSpacingSniff"
+apply "PEAR" "ControlStructures/MultiLineConditionSniff"
+apply "PEAR" "Functions/FunctionCallSignatureSniff"
+apply "Squiz" "Operators/ComparisonOperatorUsageSniff"
+apply "Squiz" "PHP/DisallowComparisonAssignmentSniff"

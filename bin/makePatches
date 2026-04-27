@@ -1,0 +1,24 @@
+#!/bin/bash -e
+
+# Some of our custom sniffs are modifications of PHPCS sniffs, but if those
+# sniffs change, we want the changes. So, we'll save our changes as patches
+# so that we can re-apply them if the original sniffs change. Run this after
+# making changes to the sniffs.
+
+SCRIPT_DIR=$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+VENDOR_DIR=$(realpath "${SCRIPT_DIR}/../vendor")
+PATCH_DIR=$(realpath "${SCRIPT_DIR}/../patches")
+SNIFF_DIR=$(realpath "${SCRIPT_DIR}/../Ork/Sniffs")
+STANDARDS_DIR=$(realpath "${VENDOR_DIR}/squizlabs/php_codesniffer/src/Standards")
+
+function make() {
+    echo "Making patch for ${1}/${2}"
+    diff -u "${STANDARDS_DIR}/${1}/Sniffs/${2}.php" "${SNIFF_DIR}/${2}.php" > "${PATCH_DIR}/${2}.patch"
+}
+
+make "Squiz" "Commenting/FileCommentSniff"
+make "PSR2" "ControlStructures/ControlStructureSpacingSniff"
+make "PEAR" "ControlStructures/MultiLineConditionSniff"
+make "PEAR" "Functions/FunctionCallSignatureSniff"
+make "Squiz" "Operators/ComparisonOperatorUsageSniff"
+make "Squiz" "PHP/DisallowComparisonAssignmentSniff"

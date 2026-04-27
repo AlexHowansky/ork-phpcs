@@ -1,5 +1,5 @@
---- ControlStructureSpacingSniff.php.orig	2025-10-29 21:34:21.076394373 -0400
-+++ ControlStructureSpacingSniff.php	2025-10-29 21:34:03.284388802 -0400
+--- /home/alex/git/ork-phpcs/vendor/squizlabs/php_codesniffer/src/Standards/PSR2/Sniffs/ControlStructures/ControlStructureSpacingSniff.php	2025-11-10 11:43:36.000000000 -0500
++++ /home/alex/git/ork-phpcs/Ork/Sniffs/ControlStructures/ControlStructureSpacingSniff.php	2026-04-27 18:53:59.510931875 -0400
 @@ -2,13 +2,17 @@
  /**
   * Checks that control structures have the correct spacing around brackets.
