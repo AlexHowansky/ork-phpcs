@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.1
+
+* Updated patch helpers to make future updates easier.
+
 ## 3.0.0
 
 * Updated to PHPCS v4.
