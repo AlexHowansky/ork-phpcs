@@ -78,7 +78,7 @@ class MultiLineConditionSniff implements Sniff
             $error = 'First condition of a multi-line IF statement must be on a new line';
             $fix   = $phpcsFile->addFixableError($error, ($openBracket + 1), 'SpacingAfterOpenBrace');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($openBracket, '('.$phpcsFile->eolChar);
+                $phpcsFile->fixer->replaceToken($openBracket, '(' . $phpcsFile->eolChar);
             }
         }
 

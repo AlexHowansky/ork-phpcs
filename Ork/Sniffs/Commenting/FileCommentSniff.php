@@ -27,8 +27,8 @@ class FileCommentSniff implements Sniff
      * @var array<string, true>
      */
     private const REQUIRED_TAGS = [
-        '@package'    => true,
-        '@copyright'  => true,
+        '@package'   => true,
+        '@copyright' => true,
     ];
 
 

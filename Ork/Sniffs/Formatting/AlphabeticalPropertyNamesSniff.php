@@ -36,8 +36,7 @@ class AlphabeticalPropertyNamesSniff implements Sniff
             T_TRAIT,
             T_VARIABLE,
         ];
-
-    }//end register()
+    }
 
 
     /**
@@ -47,7 +46,7 @@ class AlphabeticalPropertyNamesSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return int
+     * @return void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -73,8 +72,5 @@ class AlphabeticalPropertyNamesSniff implements Sniff
 
             $this->lastPropertyName = $propertyName;
         }
-
-    }//end process()
-
-
-}//end class
+    }
+}

@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.1.2",
-        "squizlabs/php_codesniffer": "^4.0.0"
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
+        "squizlabs/php_codesniffer": "^4.0.1"
     },
     "scripts": {
         "phpcs": "phpcs",

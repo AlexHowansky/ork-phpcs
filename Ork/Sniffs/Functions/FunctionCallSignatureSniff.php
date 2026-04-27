@@ -397,10 +397,9 @@ class FunctionCallSignatureSniff implements Sniff
         }
 
         $next = $phpcsFile->findNext(Tokens::EMPTY_TOKENS, ($openBracket + 1), null, true);
-        if (
-            $tokens[$next]['line'] === $tokens[$openBracket]['line'] &&
-            $tokens[$next]['code'] !== T_ARRAY &&
-            $tokens[$next]['code'] !== T_OPEN_SHORT_ARRAY
+        if ($tokens[$next]['line'] === $tokens[$openBracket]['line']
+            && $tokens[$next]['code'] !== T_ARRAY
+            && $tokens[$next]['code'] !== T_OPEN_SHORT_ARRAY
         ) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
@@ -414,10 +413,9 @@ class FunctionCallSignatureSniff implements Sniff
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $prev         = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if (
-            $tokens[$prev]['line'] === $tokens[$closeBracket]['line'] &&
-            $tokens[$prev]['code'] !== T_ARRAY &&
-            $tokens[$prev]['code'] !== T_CLOSE_SHORT_ARRAY
+        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']
+            && $tokens[$prev]['code'] !== T_ARRAY
+            && $tokens[$prev]['code'] !== T_CLOSE_SHORT_ARRAY
         ) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');

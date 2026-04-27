@@ -36,8 +36,7 @@ class AlphabeticalMethodNamesSniff implements Sniff
             T_TRAIT,
             T_FUNCTION,
         ];
-
-    }//end register()
+    }
 
 
     /**
@@ -47,7 +46,7 @@ class AlphabeticalMethodNamesSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return int
+     * @return void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -71,8 +70,5 @@ class AlphabeticalMethodNamesSniff implements Sniff
 
             $this->lastMethodName = $methodName;
         }
-
-    }//end process()
-
-
-}//end class
+    }
+}
