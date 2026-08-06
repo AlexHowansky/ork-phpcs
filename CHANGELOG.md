@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.2
+
+* Updated for PHPCS CVE.
+
 ## 3.0.1
 
 * Updated patch helpers to make future updates easier.
